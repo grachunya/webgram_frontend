@@ -1,0 +1,19 @@
+.brandTitle {
+  margin-bottom: 4px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+.serverError {
+  font-size: 0.8rem;
+  color: var(--danger);
+}

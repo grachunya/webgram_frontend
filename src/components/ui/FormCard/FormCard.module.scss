@@ -1,0 +1,39 @@
+@use '../../../styles/breakpoints' as bp;
+
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  padding: 24px;
+  background-color: var(--bg-primary);
+
+  @include bp.sm {
+    padding: 16px;
+    align-items: flex-start;
+    padding-top: 48px;
+  }
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px 32px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-elevated);
+
+  @include bp.sm {
+    padding: 28px 20px;
+    border-radius: var(--radius-md);
+  }
+}
+
+.title {
+  margin-bottom: 8px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+}

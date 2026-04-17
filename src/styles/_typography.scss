@@ -1,0 +1,28 @@
+%heading {
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--text-primary);
+}
+
+.h1 {
+  @extend %heading;
+  font-size: 2rem;
+}
+
+.h2 {
+  @extend %heading;
+  font-size: 1.5rem;
+}
+
+.h3 {
+  @extend %heading;
+  font-size: 1.25rem;
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.text-danger {
+  color: var(--danger);
+}

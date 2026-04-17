@@ -1,0 +1,248 @@
+@use "../../../styles/breakpoints" as bp;
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 56px;
+  padding: 0 24px;
+  background-color: var(--bg-card);
+  border-bottom: 1px solid var(--border-default);
+
+  @include bp.md {
+    gap: 12px;
+    padding: 0 16px;
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  flex-shrink: 0;
+
+  @include bp.sm {
+    font-size: 1rem;
+
+    span {
+      display: none;
+    }
+  }
+}
+
+.statusSelect {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.statusTrigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 20px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  background: none;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition-fast);
+
+  &:hover {
+    border-color: var(--border-hover);
+  }
+
+  @include bp.sm {
+    padding: 6px 10px;
+
+    .statusLabel {
+      display: none;
+    }
+  }
+}
+
+.statusTrigger[data-status="online"] {
+  border-color: var(--success);
+  background-color: var(--success-bg);
+  color: var(--success);
+}
+
+.statusTrigger[data-status="break"] {
+  border-color: var(--warning);
+  background-color: var(--warning-bg);
+  color: var(--warning);
+}
+
+.statusTrigger[data-status="offline"] {
+  border-color: var(--border-hover);
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+.triggerOpen {
+  border-color: var(--accent);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dotOffline {
+  background-color: var(--text-disabled);
+}
+
+.dotBreak {
+  background-color: var(--warning);
+}
+
+.dotOnline {
+  background-color: var(--success);
+}
+
+.chevronUp {
+  transform: rotate(180deg);
+
+  @include bp.sm {
+    display: none;
+  }
+}
+
+.statusDropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 50;
+  min-width: 100%;
+  padding: 4px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-elevated);
+}
+
+.statusOption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 130px;
+  padding: 8px 12px;
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  transition: background-color var(--transition-fast);
+
+  &:hover {
+    background-color: var(--bg-secondary);
+  }
+}
+
+.callGroup {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-left: auto;
+
+  @include bp.md {
+    gap: 8px;
+  }
+
+  @include bp.sm {
+    gap: 6px;
+  }
+}
+
+.phoneInput {
+  width: 220px;
+  padding: 8px 14px;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition-fast);
+
+  &::placeholder {
+    color: var(--text-disabled);
+  }
+
+  &:focus {
+    border-color: var(--accent);
+    outline: none;
+  }
+
+  @include bp.md {
+    width: 160px;
+  }
+
+  @include bp.sm {
+    width: 90px;
+    padding: 6px 10px;
+    font-size: 0.82rem;
+
+    &::placeholder {
+      font-size: 0.75rem;
+    }
+  }
+}
+
+.btnCall {
+  background-color: var(--success) !important;
+  border: 1px solid var(--success) !important;
+
+  &:hover {
+    background-color: var(--success-hover) !important;
+    border: 1px solid var(--success) !important;
+  }
+
+  &:disabled {
+    background-color: var(--success-disabled) !important;
+    border: 1px solid var(--success-disabled) !important;
+  }
+
+  @include bp.sm {
+    span {
+      display: none;
+    }
+  }
+}
+
+.callGroup button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--bg-secondary);
+  transition: background-color var(--transition-fast);
+
+  &:hover {
+    background-color: var(--bg-secondary);
+  }
+
+  @include bp.sm {
+    width: 32px;
+    height: 32px;
+  }
+}

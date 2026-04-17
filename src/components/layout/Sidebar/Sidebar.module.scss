@@ -1,0 +1,63 @@
+@use '../../../styles/breakpoints' as bp;
+
+.sidebarWrapper {
+  width: fit-content;
+  height: 100%;
+
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 240px;
+  min-height: 100vh;
+  padding: 16px 12px;
+  cursor: pointer;
+  background-color: var(--bg-card);
+  border-right: 1px solid var(--border-default);
+  overflow: hidden;
+  transition: width var(--transition-base);
+
+
+  &.collapsed {
+    width: 70px;
+  }
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: default;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+
+  &:hover {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+  }
+}
+
+.active {
+  background-color: #4f46e50d;
+  color: var(--accent);
+  font-weight: 500;
+
+  &:hover {
+    background-color: #4f46e514;
+    color: var(--accent-hover);
+  }
+}

@@ -1,0 +1,61 @@
+@use '../../../styles/breakpoints' as bp;
+
+.tabs {
+  display: inline-flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  padding: 4px;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+
+  @include bp.sm {
+    flex-direction: column;
+    width: 100%;
+    gap: 2px;
+  }
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+  white-space: nowrap;
+
+  &:hover {
+    color: var(--text-primary);
+  }
+
+  @include bp.sm {
+    width: 100%;
+    justify-content: center;
+    padding: 10px 12px;
+    font-size: 0.82rem;
+  }
+}
+
+.tabActive {
+  background-color: var(--bg-card);
+  color: var(--accent);
+  box-shadow: 0 1px 2px rgba(0 0 0 / 0.06);
+  &:hover {
+    color: var(--accent);
+  }
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  font-size: 1rem;
+}

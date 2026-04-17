@@ -1,0 +1,51 @@
+@use '../../../styles/breakpoints' as bp;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+  padding: 50px 24px 24px;
+  background-color: rgba(0 0 0 / 0.4);
+
+  @include bp.sm {
+    padding: 60px 16px 16px;
+    align-items: flex-start;
+  }
+}
+
+.modal {
+  width: 100%;
+  max-width: 400px;
+  height: fit-content;
+  padding: 24px;
+  background-color: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-elevated);
+
+  @include bp.sm {
+    padding: 20px;
+    border-radius: var(--radius-md);
+  }
+}
+
+.title {
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.message {
+  margin-bottom: 24px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

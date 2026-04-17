@@ -1,0 +1,28 @@
+@use '../../../styles/breakpoints' as bp;
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.main {
+  flex: 1;
+  padding: 32px;
+  overflow-y: auto;
+
+  @include bp.md {
+    padding: 20px;
+  }
+
+  @include bp.sm {
+    padding: 16px;
+  }
+}
