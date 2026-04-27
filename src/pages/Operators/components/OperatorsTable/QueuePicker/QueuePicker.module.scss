@@ -1,0 +1,95 @@
+.picker {
+  position: relative;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  text-align: left;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:hover {
+    border-color: var(--border-hover);
+  }
+}
+
+.triggerOpen {
+  border-color: var(--accent);
+}
+
+.placeholder {
+  color: var(--text-disabled);
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 50;
+  min-width: 180px;
+  padding: 4px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-elevated);
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  text-align: left;
+  color: var(--text-primary);
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  transition: background-color var(--transition-fast);
+
+  &:hover {
+    background-color: var(--bg-primary);
+  }
+}
+
+.optionActive {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.checked {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  border-radius: 3px;
+  background-color: var(--accent);
+}
+
+.unchecked {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  border-radius: 3px;
+  border: 1.5px solid var(--border-hover);
+  background-color: var(--bg-input);
+}
+
+.empty {
+  display: block;
+  padding: 8px 10px;
+  font-size: 0.85rem;
+  color: var(--text-disabled);
+}

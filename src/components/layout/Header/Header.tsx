@@ -1,41 +1,35 @@
-import { useState, useRef, useEffect } from "react";
-import { Phone, PhoneCall, ChevronDown, LogOut } from "lucide-react";
+import { useState } from "react";
+import { Phone, PhoneCall, LogOut } from "lucide-react";
 import Button from "@ui/Button/Button";
+import StatusSelect from "@ui/StatusSelect/StatusSelect";
+import type { AgentStatus } from "@api/agents";
 import { useAuth } from "@hooks/useAuth";
+import { useCurrentUser } from "@hooks/useCurrentUser";
+import { useQueryClient } from "@tanstack/react-query";
+import { setStatus as setStatusApi } from "@api/agents";
 import styles from "./Header.module.scss";
-
-type Status = "offline" | "break" | "online";
-
-const STATUS_MAP: Record<Status, { label: string; colorVar: string }> = {
-  offline: { label: "Отсутствует", colorVar: styles.dotOffline },
-  break: { label: "На перерыве", colorVar: styles.dotBreak },
-  online: { label: "На линии", colorVar: styles.dotOnline },
-};
-
-const STATUS_OPTIONS: { value: Status; label: string }[] = [
-  { value: "offline", label: "Отсутствует" },
-  { value: "break", label: "На перерыве" },
-  { value: "online", label: "На линии" },
-];
 
 const Header = () => {
   const { logout } = useAuth();
+  const { data: user } = useCurrentUser();
+  const qc = useQueryClient();
   const [phone, setPhone] = useState("");
-  const [status, setStatus] = useState<Status>("offline");
-  const [statusOpen, setStatusOpen] = useState(false);
-  const statusRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (statusRef.current && !statusRef.current.contains(e.target as Node)) {
-        setStatusOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  const agentStatus = (user?.agent?.agent_status || "") as AgentStatus | "";
 
-  const current = STATUS_MAP[status];
+  const handleStatusChange = async (status: AgentStatus) => {
+    if (!user?.agent) return;
+    try {
+      await setStatusApi({
+        agent_uuid: user.agent.agent_uuid,
+        agent_status: status,
+      });
+      qc.invalidateQueries({ queryKey: ["currentUser"] });
+      qc.invalidateQueries({ queryKey: ["users"] });
+    } catch {
+      // ignore
+    }
+  };
 
   const handleCall = () => {
     if (!phone.trim()) return;
@@ -48,42 +42,12 @@ const Header = () => {
         <span>Webgram</span>
       </div>
 
-      <div className={styles.statusSelect} ref={statusRef}>
-        <button
-          type="button"
-          className={`${styles.statusTrigger} ${statusOpen ? styles.triggerOpen : ""}`}
-          onClick={() => setStatusOpen((v) => !v)}
-          data-status={status}
-        >
-          <span className={`${styles.dot} ${current.colorVar}`} />
-          <span className={styles.statusLabel}>{current.label}</span>
-          <ChevronDown
-            size={14}
-            className={statusOpen ? styles.chevronUp : ""}
-          />
-        </button>
-
-        {statusOpen && (
-          <div className={styles.statusDropdown}>
-            {STATUS_OPTIONS.map((opt) => (
-              <button
-                key={opt.value}
-                type="button"
-                className={`${styles.statusOption} ${opt.value === status ? styles.statusOptionActive : ""}`}
-                onClick={() => {
-                  setStatus(opt.value);
-                  setStatusOpen(false);
-                }}
-              >
-                <span
-                  className={`${styles.dot} ${STATUS_MAP[opt.value].colorVar}`}
-                />
-                {opt.label}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
+      <StatusSelect
+        value={agentStatus}
+        onChange={handleStatusChange}
+        disabled={!user?.agent}
+        placeholder="Не задан"
+      />
 
       <div className={styles.callGroup}>
         <input

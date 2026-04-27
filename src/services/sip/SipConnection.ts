@@ -29,12 +29,12 @@ export class SipConnection {
     }
   }
 
-  static getRemoteAudio(): HTMLAudioElement {
-    return this.remoteAudio;
+  getRemoteAudio(): HTMLAudioElement {
+    return SipConnection.remoteAudio;
   }
 
-  static getLocalAudio(): HTMLAudioElement {
-    return this.localAudio;
+  getLocalAudio(): HTMLAudioElement {
+    return SipConnection.localAudio;
   }
 
   async connectAndRegister(onRegistered?: () => void): Promise<void> {
@@ -78,8 +78,6 @@ export class SipConnection {
   get userAgentRef(): UserAgent | null {
     return this.userAgent;
   }
-
-  
 
   async disconnect(): Promise<void> {
     if (SipConnection.remoteAudio.srcObject) {

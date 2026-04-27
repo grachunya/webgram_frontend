@@ -43,51 +43,25 @@
   }
 }
 
-.actionsCol {
-  width: 100px;
+.nameCell {
+  font-weight: 500;
+  white-space: nowrap;
 }
 
-.actions {
-  display: flex;
-  gap: 6px;
+.muted {
+  color: var(--text-disabled);
 }
 
-.iconBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  cursor: pointer;
-  border-radius: var(--radius-sm);
-  transition: all var(--transition-fast);
-  border: none;
-  background: transparent;
+.selectCell {
+  min-width: 160px;
 
-  &:hover {
-    transform: translateY(-1px);
-
+  & > div {
+    gap: 0;
   }
 }
 
-.editBtn {
-  color: var(--info);
-  background-color: var(--info-bg);
-
-  &:hover {
-    background-color: var(--info-bg-hover);
-    color: var(--info-hover);
-  }
-}
-
-.dangerBtn {
-  color: var(--danger);
-  background-color: var(--danger-bg);
-
-  &:hover {
-    background-color: var(--danger-bg-hover);
-    color: var(--danger-hover);
-  }
+.queueCell {
+  min-width: 140px;
 }
 
 .empty {
@@ -96,4 +70,3 @@
   color: var(--text-disabled);
   font-size: 0.9rem;
 }
-

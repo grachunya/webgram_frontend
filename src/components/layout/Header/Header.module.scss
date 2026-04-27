@@ -13,6 +13,13 @@
     gap: 12px;
     padding: 0 16px;
   }
+
+  @include bp.sm {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 8px 12px;
+    gap: 8px;
+  }
 }
 
 .logo {
@@ -34,120 +41,6 @@
   }
 }
 
-.statusSelect {
-  position: relative;
-  flex-shrink: 0;
-}
-
-.statusTrigger {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 20px;
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  cursor: pointer;
-  background: none;
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-sm);
-  transition: border-color var(--transition-fast);
-
-  &:hover {
-    border-color: var(--border-hover);
-  }
-
-  @include bp.sm {
-    padding: 6px 10px;
-
-    .statusLabel {
-      display: none;
-    }
-  }
-}
-
-.statusTrigger[data-status="online"] {
-  border-color: var(--success);
-  background-color: var(--success-bg);
-  color: var(--success);
-}
-
-.statusTrigger[data-status="break"] {
-  border-color: var(--warning);
-  background-color: var(--warning-bg);
-  color: var(--warning);
-}
-
-.statusTrigger[data-status="offline"] {
-  border-color: var(--border-hover);
-  background-color: var(--bg-secondary);
-  color: var(--text-secondary);
-}
-
-.triggerOpen {
-  border-color: var(--accent);
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.dotOffline {
-  background-color: var(--text-disabled);
-}
-
-.dotBreak {
-  background-color: var(--warning);
-}
-
-.dotOnline {
-  background-color: var(--success);
-}
-
-.chevronUp {
-  transform: rotate(180deg);
-
-  @include bp.sm {
-    display: none;
-  }
-}
-
-.statusDropdown {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  z-index: 50;
-  min-width: 100%;
-  padding: 4px;
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-elevated);
-}
-
-.statusOption {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  min-width: 130px;
-  padding: 8px 12px;
-  font-size: 0.82rem;
-  color: var(--text-primary);
-  cursor: pointer;
-  background: none;
-  border: none;
-  border-radius: 6px;
-  transition: background-color var(--transition-fast);
-
-  &:hover {
-    background-color: var(--bg-secondary);
-  }
-}
-
 .callGroup {
   display: flex;
   align-items: center;
@@ -159,7 +52,10 @@
   }
 
   @include bp.sm {
+    flex: 1;
     gap: 6px;
+    margin-left: 0;
+    min-width: 0;
   }
 }
 
@@ -187,7 +83,9 @@
   }
 
   @include bp.sm {
-    width: 90px;
+    flex: 1;
+    width: auto;
+    min-width: 0;
     padding: 6px 10px;
     font-size: 0.82rem;
 

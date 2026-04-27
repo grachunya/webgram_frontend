@@ -7,7 +7,18 @@ export interface User {
     role_uuid: string;
     role_name: string;
   };
-  agent: null;
+  agent: {
+    agent_uuid: string;
+    agent_name: string;
+    agent_number: string | null;
+    agent_password: string | null;
+    domain_uuid: string;
+    agent_status: string;
+    queues: {
+      queue_uuid: string;
+      queue_name: string;
+    }[];
+  } | null;
 }
 
 export interface CreateUserPayload {

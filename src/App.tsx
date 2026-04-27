@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "@pages/Login/Login";
 import Home from "@pages/Home/Home";
 import Users from "@pages/Users/Users";
+import Operators from "@pages/Operators/Operators";
 import AccessDenied from "@pages/AccessDenied/AccessDenied";
 import NotFound from "@pages/NotFound/NotFound";
 import Layout from "@components/layout/Layout/Layout";
@@ -41,6 +42,14 @@ const App = () => (
           element={
             <RoleGuard role="superadmin">
               <Users />
+            </RoleGuard>
+          }
+        />
+        <Route
+          path="/operators"
+          element={
+            <RoleGuard role="superadmin">
+              <Operators />
             </RoleGuard>
           }
         />

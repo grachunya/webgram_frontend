@@ -27,8 +27,13 @@ api.interceptors.response.use(
 
     const status = error.response?.status;
 
+    const isAuthError =
+      status === 401 ||
+      (status === 403 &&
+        error.response?.data?.message === "Authentification required");
+
     const shouldTryRefresh =
-      status === 401 &&
+      isAuthError &&
       !original._retry &&
       !original.url?.includes("/auth/refresh") &&
       !original.url?.includes("/auth/logout");

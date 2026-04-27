@@ -1,7 +1,11 @@
-@use "../../styles/breakpoints" as bp;
+@use '../../styles/breakpoints' as bp;
 
 .page {
   max-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
 }
 
 .toolbar {
@@ -23,21 +27,6 @@
 
   @include bp.sm {
     font-size: 1.15rem;
-  }
-}
-
-.toolbar button {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  white-space: nowrap;
-
-  @include bp.sm {
-    padding: 8px 12px;
-
-    span {
-      display: none;
-    }
   }
 }
 
