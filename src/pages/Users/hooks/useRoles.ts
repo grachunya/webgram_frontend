@@ -15,7 +15,7 @@ export const useRoles = () => {
     [qc],
   );
 
-  const { data: roles = [], isPending } = useQuery({
+  const { data: roles = [], isPending, isError, error } = useQuery({
     queryKey: ['roles'],
     queryFn: getRoles,
   });
@@ -35,5 +35,5 @@ export const useRoles = () => {
     onSuccess: invalidate,
   });
 
-  return { roles, isPending, create, update, remove };
+  return { roles, isPending, isError, error, create, update, remove };
 };

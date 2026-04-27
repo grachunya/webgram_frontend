@@ -45,3 +45,10 @@
 .loading {
   color: var(--text-secondary);
 }
+
+.error {
+  padding: 40px 16px;
+  text-align: center;
+  color: var(--danger);
+  font-size: 0.9rem;
+}

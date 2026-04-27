@@ -1,24 +1,33 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { login } from '@api/auth';
-import { token } from '@lib/token';
+import { login as loginApi, logout as logoutApi } from '@api/auth';
 import type { LoginPayload } from '@api/auth';
 
 export const useAuth = () => {
   const navigate = useNavigate();
+  const qc = useQueryClient();
 
-  const mutation = useMutation({
-    mutationFn: (payload: LoginPayload) => login(payload),
-    onSuccess: (data) => {
-      token.set(data.access_token, data.refresh_token);
+  const loginMutation = useMutation({
+    mutationFn: (payload: LoginPayload) => loginApi(payload),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['currentUser'] });
       navigate('/home');
     },
   });
 
+  const logoutMutation = useMutation({
+    mutationFn: logoutApi,
+    onSettled: () => {
+      qc.clear();
+      navigate('/login');
+    },
+  });
+
   return {
-    login: mutation.mutate,
-    isPending: mutation.isPending,
-    isError: mutation.isError,
-    error: mutation.error,
+    login: loginMutation.mutate,
+    logout: logoutMutation.mutate,
+    isPending: loginMutation.isPending,
+    isError: loginMutation.isError,
+    error: loginMutation.error,
   };
 };

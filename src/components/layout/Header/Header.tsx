@@ -1,8 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Phone, PhoneCall, ChevronDown, LogOut } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { token } from "@lib/token";
 import Button from "@ui/Button/Button";
+import { useAuth } from "@hooks/useAuth";
 import styles from "./Header.module.scss";
 
 type Status = "offline" | "break" | "online";
@@ -20,7 +19,7 @@ const STATUS_OPTIONS: { value: Status; label: string }[] = [
 ];
 
 const Header = () => {
-  const navigate = useNavigate();
+  const { logout } = useAuth();
   const [phone, setPhone] = useState("");
   const [status, setStatus] = useState<Status>("offline");
   const [statusOpen, setStatusOpen] = useState(false);
@@ -40,11 +39,6 @@ const Header = () => {
 
   const handleCall = () => {
     if (!phone.trim()) return;
-  };
-
-  const handleLogout = () => {
-    token.clear();
-    navigate("/login");
   };
 
   return (
@@ -105,7 +99,7 @@ const Header = () => {
         </Button>
       </div>
 
-      <button className={styles.logoutBtn} onClick={handleLogout} title="Выйти">
+      <button className={styles.logoutBtn} onClick={() => logout()} title="Выйти">
         <LogOut size={18} />
       </button>
     </header>

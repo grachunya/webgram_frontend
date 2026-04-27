@@ -3,6 +3,7 @@ import { useAuth } from "@hooks/useAuth";
 import Button from "@ui/Button/Button";
 import FormCard from "@ui/FormCard/FormCard";
 import Input from "@ui/Input/Input";
+import { getServerErrorMessage } from "@lib/getErrorMessage";
 import { useForm } from "react-hook-form";
 import styles from "./Login.module.scss";
 
@@ -33,8 +34,8 @@ const Login = () => {
             {...register("user_name", {
               required: "Обязательное поле",
               minLength: {
-                value: 6,
-                message: "Минимум 6 символов",
+                value: 3,
+                message: "Минимум 3 символов",
               },
             })}
           />
@@ -42,21 +43,21 @@ const Login = () => {
           <Input
             label="Пароль"
             type="password"
-            placeholder="••••••"
+            placeholder="••••••••"
             autoComplete="current-password"
             error={errors.user_password?.message}
             {...register("user_password", {
               required: "Обязательное поле",
               minLength: {
-                value: 6,
-                message: "Минимум 6 символов",
+                value: 8,
+                message: "Минимум 8 символов",
               },
             })}
           />
 
           {isError && (
             <span className={styles.serverError}>
-              {error instanceof Error ? error.message : "Произошла ошибка"}
+              {getServerErrorMessage(error) ?? "Произошла ошибка"}
             </span>
           )}
 

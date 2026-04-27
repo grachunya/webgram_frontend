@@ -1,21 +1,16 @@
 import { Pencil, Trash2, KeyRound } from 'lucide-react';
 import type { User } from '@api/users';
-import type { Role } from '@api/roles';
 import RoleBadge from '../RoleBadge/RoleBadge';
 import styles from './UsersTable.module.scss';
 
 interface UsersTableProps {
   users: User[];
-  roles: Role[];
   onEdit: (user: User) => void;
   onPassword: (user: User) => void;
   onDelete: (user: User) => void;
 }
 
-const getRoleName = (roles: Role[], roleUuid: string) =>
-  roles.find((r) => r.role_uuid === roleUuid)?.role_name ?? '—';
-
-const UsersTable = ({ users, roles, onEdit, onPassword, onDelete }: UsersTableProps) => (
+const UsersTable = ({ users, onEdit, onPassword, onDelete }: UsersTableProps) => (
   <div className={styles.tableWrap}>
     <table className={styles.table}>
       <thead>
@@ -30,7 +25,7 @@ const UsersTable = ({ users, roles, onEdit, onPassword, onDelete }: UsersTablePr
           <tr key={u.user_uuid}>
             <td className={styles.nameCell}>{u.user_name}</td>
             <td className={styles.roleCol}>
-              <RoleBadge roleName={getRoleName(roles, u.role_uuid)} />
+              <RoleBadge roleName={u.role.role_name} />
             </td>
             <td className={styles.actionsCol}>
               <div className={styles.actions}>

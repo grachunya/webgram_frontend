@@ -1,6 +1,7 @@
 import { Pencil, Trash2 } from 'lucide-react';
 import type { Role } from '@api/roles';
 import styles from './RolesTable.module.scss';
+import RoleBadge from '../RoleBadge/RoleBadge';
 
 interface RolesTableProps {
   roles: Role[];
@@ -20,7 +21,7 @@ const RolesTable = ({ roles, onEdit, onDelete }: RolesTableProps) => (
       <tbody>
         {roles.map((r) => (
           <tr key={r.role_uuid}>
-            <td>{r.role_name}</td>
+            <td ><RoleBadge roleName={r.role_name}/></td>
             <td className={styles.actionsCol}>
               <div className={styles.actions}>
                 <button

@@ -17,7 +17,7 @@ export const useUsers = () => {
     [qc],
   );
 
-  const { data: users = [], isPending } = useQuery({
+  const { data: users = [], isPending, isError, error } = useQuery({
     queryKey: ["users"],
     queryFn: getUsers,
   });
@@ -48,5 +48,5 @@ export const useUsers = () => {
     onSuccess: invalidate,
   });
 
-  return { users, isPending, create, update, changePassword, remove };
+  return { users, isPending, isError, error, create, update, changePassword, remove };
 };

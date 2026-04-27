@@ -1,19 +1,24 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import path from 'path'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import path from "path";
+import basicSsl from "@vitejs/plugin-basic-ssl";
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), basicSsl()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-      '@ui': path.resolve(__dirname, './src/components/ui'),
-      '@pages': path.resolve(__dirname, './src/pages'),
-      '@lib': path.resolve(__dirname, './src/lib'),
-      '@api': path.resolve(__dirname, './src/api'),
-      '@hooks': path.resolve(__dirname, './src/hooks'),
-      '@styles': path.resolve(__dirname, './src/styles'),
-      '@components': path.resolve(__dirname, './src/components'),
+      "@": path.resolve(__dirname, "./src"),
+      "@ui": path.resolve(__dirname, "./src/components/ui"),
+      "@pages": path.resolve(__dirname, "./src/pages"),
+      "@lib": path.resolve(__dirname, "./src/lib"),
+      "@api": path.resolve(__dirname, "./src/api"),
+      "@hooks": path.resolve(__dirname, "./src/hooks"),
+      "@styles": path.resolve(__dirname, "./src/styles"),
+      "@components": path.resolve(__dirname, "./src/components"),
     },
   },
-})
+  server: {
+    https: true,
+    port: 5173,
+  },
+});

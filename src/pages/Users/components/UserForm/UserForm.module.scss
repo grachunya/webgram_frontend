@@ -10,3 +10,9 @@ form {
   gap: 16px;
   margin-bottom: 50px;
 }
+
+.serverError {
+  font-size: 0.8rem;
+  color: var(--danger);
+  margin-bottom: 12px;
+}

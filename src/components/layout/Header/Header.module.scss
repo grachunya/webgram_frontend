@@ -208,7 +208,7 @@
 
   &:disabled {
     background-color: var(--success-disabled) !important;
-    border: 1px solid var(--success-disabled) !important;
+    border: none !important;
   }
 
   @include bp.sm {

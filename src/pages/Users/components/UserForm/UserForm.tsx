@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useForm, Controller } from "react-hook-form";
 import type { Role } from "@api/roles";
 import Input from "@ui/Input/Input";
@@ -6,6 +7,7 @@ import Button from "@ui/Button/Button";
 import styles from "./UserForm.module.scss";
 
 interface FormValues {
+  user_uuid: string;
   user_name: string;
   role_uuid: string;
   user_password?: string;
@@ -14,6 +16,7 @@ interface FormValues {
 interface UserFormProps {
   roles: Role[];
   defaultValues?: {
+    user_uuid?: string;
     user_name: string;
     role_uuid: string;
     user_password?: string;
@@ -22,6 +25,7 @@ interface UserFormProps {
   isPending: boolean;
   submitLabel: string;
   showPasswordField?: boolean;
+  serverError?: string;
 }
 
 const UserForm = ({
@@ -31,7 +35,12 @@ const UserForm = ({
   isPending,
   submitLabel,
   showPasswordField = true,
+  serverError,
 }: UserFormProps) => {
+  const generatedUserUuid = useMemo(() => {
+    return defaultValues?.user_uuid ?? crypto.randomUUID();
+  }, [defaultValues?.user_uuid]);
+
   const {
     register,
     handleSubmit,
@@ -39,6 +48,7 @@ const UserForm = ({
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
+      user_uuid: generatedUserUuid,
       user_name: defaultValues?.user_name ?? "",
       role_uuid: defaultValues?.role_uuid ?? "",
       user_password: defaultValues?.user_password ?? "",
@@ -53,6 +63,7 @@ const UserForm = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
       <div className={styles.fields}>
+        <input type="hidden" {...register("user_uuid")} />
         <Input
           label="Логин"
           placeholder="Логин"
@@ -83,7 +94,7 @@ const UserForm = ({
           <Input
             label="Пароль"
             type="password"
-            placeholder="••••••"
+            placeholder="••••••••"
             error={errors.user_password?.message}
             {...register("user_password", {
               required: showPasswordField ? "Обязательное поле" : false,
@@ -92,6 +103,9 @@ const UserForm = ({
           />
         )}
       </div>
+
+      {serverError && <span className={styles.serverError}>{serverError}</span>}
+
       <Button type="submit" block disabled={isPending}>
         {isPending ? "Сохранение..." : submitLabel}
       </Button>

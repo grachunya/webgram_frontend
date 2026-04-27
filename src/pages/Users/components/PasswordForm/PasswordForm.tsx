@@ -6,9 +6,10 @@ import styles from "./PasswordForm.module.scss";
 interface PasswordFormProps {
   onSubmit: (data: { user_password: string }) => void;
   isPending: boolean;
+  serverError?: string;
 }
 
-const PasswordForm = ({ onSubmit, isPending }: PasswordFormProps) => {
+const PasswordForm = ({ onSubmit, isPending, serverError }: PasswordFormProps) => {
   const {
     register,
     handleSubmit,
@@ -21,7 +22,7 @@ const PasswordForm = ({ onSubmit, isPending }: PasswordFormProps) => {
         <Input
           label="Новый пароль"
           type="password"
-          placeholder="••••••"
+          placeholder="••••••••"
           error={errors.user_password?.message}
           {...register("user_password", {
             required: "Обязательное поле",
@@ -29,6 +30,7 @@ const PasswordForm = ({ onSubmit, isPending }: PasswordFormProps) => {
           })}
         />
       </div>
+      {serverError && <span className={styles.serverError}>{serverError}</span>}
       <Button type="submit" block disabled={isPending}>
         {isPending ? "Сохранение..." : "Сменить пароль"}
       </Button>

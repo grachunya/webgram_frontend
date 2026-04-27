@@ -1,11 +1,7 @@
 import { NavLink } from "react-router-dom";
-import { Home as HomeIcon, Users as UsersIcon } from "lucide-react";
+import { useCurrentUser } from "@hooks/useCurrentUser";
+import { sidebarItems } from "./sidebarItems";
 import styles from "./Sidebar.module.scss";
-
-const navItems = [
-  { to: "/home", label: "Главная", icon: HomeIcon },
-  { to: "/users", label: "Пользователи", icon: UsersIcon },
-] as const;
 
 interface SidebarProps {
   collapsed: boolean;
@@ -13,6 +9,9 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
+  const { data: user } = useCurrentUser();
+  const userRole = user?.role?.role_name;
+
   const handleMouseEnter = () => {
     if (collapsed) onToggle();
   };
@@ -25,6 +24,10 @@ const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
     if (!collapsed) onToggle();
   };
 
+  const visibleItems = sidebarItems.filter(
+    (item) => !item.requiredRole || item.requiredRole === userRole,
+  );
+
   return (
     <div
       className={styles.sidebarWrapper}
@@ -35,7 +38,7 @@ const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
         className={`${styles.sidebar} ${collapsed ? styles.collapsed : ""}`}
       >
         <nav className={styles.nav}>
-          {navItems.map(({ to, label, icon: Icon }) => (
+          {visibleItems.map(({ to, label, icon: Icon }) => (
             <NavLink
               key={to}
               to={to}

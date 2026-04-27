@@ -1,4 +1,4 @@
-import { ROLE_COLORS, DEFAULT_ROLE_COLOR } from '@api/users.types';
+import { getRoleColor } from '@api/roles';
 import styles from './RoleBadge.module.scss';
 
 interface RoleBadgeProps {
@@ -6,7 +6,7 @@ interface RoleBadgeProps {
 }
 
 const RoleBadge = ({ roleName }: RoleBadgeProps) => {
-  const color = ROLE_COLORS[roleName] ?? DEFAULT_ROLE_COLOR;
+  const color = getRoleColor(roleName);
 
   return (
     <span className={styles.badge} style={{ backgroundColor: `${color}18`, color }}>
