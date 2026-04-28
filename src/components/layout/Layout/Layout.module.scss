@@ -1,9 +1,9 @@
-@use '../../../styles/breakpoints' as bp;
+@use "../../../styles/breakpoints" as bp;
 
 .layout {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
   background-color: var(--bg-primary);
 }
 

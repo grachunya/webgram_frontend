@@ -22,12 +22,11 @@
   }
 
   th {
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: 0.875rem;
+    font-weight: 700;
     color: var(--text-primary);
     background-color: var(--bg-primary);
     letter-spacing: 0.02em;
-    text-transform: uppercase;
   }
 
   tbody tr {
@@ -44,7 +43,8 @@
 }
 
 .nameCell {
-  font-weight: 500;
+  font-weight: 400;
+  font-size: 0.875rem;
   white-space: nowrap;
 }
 
@@ -58,6 +58,11 @@
   & > div {
     gap: 0;
   }
+}
+
+.statusCall {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
 }
 
 .queueCell {

@@ -1,18 +1,21 @@
 import type { AgentStatus, FreeAgent, Queue } from "@api/agents";
 import type { User } from "@api/users";
 import RoleBadge from "@ui/RoleBadge/RoleBadge";
-import StatusSelect from "@ui/StatusSelect/StatusSelect";
 import Select from "@ui/Select/Select";
+import StatusSelect from "@ui/StatusSelect/StatusSelect";
 import { useState } from "react";
-import QueuePicker from "./QueuePicker/QueuePicker";
 import styles from "./OperatorsTable.module.scss";
+import QueuePicker from "./QueuePicker/QueuePicker";
 
 interface OperatorsTableProps {
   users: User[];
   freeAgents: FreeAgent[];
   queues: Queue[];
   onAssignAgent: (data: { agentUuid: string; userUuid: string }) => void;
-  onSetStatus: (data: { agent_uuid: string; agent_status: AgentStatus }) => void;
+  onSetStatus: (data: {
+    agent_uuid: string;
+    agent_status: AgentStatus;
+  }) => void;
   onSetQueues: (data: { agent_uuid: string; queue_uuids: string[] }) => void;
 }
 
@@ -24,7 +27,9 @@ const OperatorsTable = ({
   onSetStatus,
   onSetQueues,
 }: OperatorsTableProps) => {
-  const [queueSelections, setQueueSelections] = useState<Record<string, string[]>>({});
+  const [queueSelections, setQueueSelections] = useState<
+    Record<string, string[]>
+  >({});
 
   const agentOptions = freeAgents.map((a) => ({
     value: a.agent_uuid,
@@ -36,7 +41,10 @@ const OperatorsTable = ({
       value: agent.agent_uuid,
       label: agent.agent_number || agent.agent_name,
     };
-    return [current, ...agentOptions.filter((a) => a.value !== agent.agent_uuid)];
+    return [
+      current,
+      ...agentOptions.filter((a) => a.value !== agent.agent_uuid),
+    ];
   };
 
   return (
@@ -48,6 +56,7 @@ const OperatorsTable = ({
             <th>Номер</th>
             <th>Очереди</th>
             <th>Статус</th>
+            <th>Статус разговоров</th>
             <th>Роль</th>
           </tr>
         </thead>
@@ -62,7 +71,9 @@ const OperatorsTable = ({
                 <td className={styles.selectCell}>
                   <Select
                     label=""
-                    options={agent ? agentOptionsWithCurrent(agent) : agentOptions}
+                    options={
+                      agent ? agentOptionsWithCurrent(agent) : agentOptions
+                    }
                     value={agent?.agent_uuid ?? ""}
                     placeholder="Назначить..."
                     onChange={(uuid) =>
@@ -78,7 +89,10 @@ const OperatorsTable = ({
                   {agent ? (
                     <QueuePicker
                       queues={queues}
-                      selected={queueSelections[agent.agent_uuid] ?? agent.queues.map((q) => q.queue_uuid)}
+                      selected={
+                        queueSelections[agent.agent_uuid] ??
+                        agent.queues.map((q) => q.queue_uuid)
+                      }
                       onChange={(uuids) => {
                         setQueueSelections((prev) => ({
                           ...prev,
@@ -94,7 +108,9 @@ const OperatorsTable = ({
                     <span className={styles.muted}>Не назначено</span>
                   )}
                 </td>
-
+                <td className={`${styles.queueCell} ${styles.statusCall}`}>
+                  Не в разговоре
+                </td>
                 <td className={styles.selectCell}>
                   {agent ? (
                     <StatusSelect
@@ -105,7 +121,6 @@ const OperatorsTable = ({
                           agent_status: s,
                         })
                       }
-                      compact
                     />
                   ) : (
                     <span className={styles.muted}>Не назначен</span>

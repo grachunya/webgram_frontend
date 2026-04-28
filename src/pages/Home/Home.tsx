@@ -3,8 +3,6 @@ import styles from "./Home.module.scss";
 import { CARD_SECTIONS } from "./lib/cardData";
 
 const Home = () => {
-  const currentYear = new Date().getFullYear();
-
   return (
     <div className={styles.page}>
       <div className={styles.content}>
@@ -36,11 +34,6 @@ const Home = () => {
           })}
         </nav>
       </div>
-
-      <footer className={styles.footer}>
-        <span>Webgram</span>
-        <span className={styles.footerCopy}>&copy; {currentYear}</span>
-      </footer>
     </div>
   );
 };

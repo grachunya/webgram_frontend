@@ -5,8 +5,9 @@
 .trigger {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
+  justify-content: space-between;
+  padding: 11px 14px;
+  width: 100%;
   font-size: 0.82rem;
   font-weight: 500;
   color: var(--text-secondary);
@@ -14,11 +15,15 @@
   background: none;
   border: 1px solid var(--border-default);
   border-radius: var(--radius-sm);
-  transition: border-color var(--transition-fast), background-color var(--transition-fast), color var(--transition-fast);
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast),
+    color var(--transition-fast);
   white-space: nowrap;
+  transition: all 0.2s ease;
 
   &:hover:not(:disabled) {
-    border-color: var(--border-hover);
+    transform: translateY(-1px);
   }
 
   &:disabled {
@@ -45,15 +50,18 @@
   color: var(--text-secondary);
 }
 
-.triggerOpen {
-  border-color: var(--accent);
+.dotLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .dot {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   flex-shrink: 0;
+  display: inline-block;
 }
 
 .dotOffline {
@@ -93,6 +101,7 @@
   min-width: 130px;
   padding: 8px 12px;
   font-size: 0.82rem;
+  margin: 2px 0;
   color: var(--text-primary);
   cursor: pointer;
   background: none;
@@ -103,9 +112,4 @@
   &:hover {
     background-color: var(--bg-secondary);
   }
-}
-
-.optionActive {
-  font-weight: 600;
-  background-color: var(--bg-secondary);
 }

@@ -60,12 +60,15 @@ const StatusSelect = ({
         onClick={() => !disabled && setOpen((v) => !v)}
         disabled={disabled}
       >
-        <span
-          className={`${styles.dot} ${current?.dotClass ?? styles.dotOffline}`}
-        />
-        <span className={styles.label}>
-          {current?.label ?? placeholder ?? "Не задан"}
-        </span>
+        <div className={styles.dotLabel}>
+          <span
+            className={`${styles.dot} ${current?.dotClass ?? styles.dotOffline}`}
+          />
+          <span className={styles.label}>
+            {current?.label ?? placeholder ?? "Не задан"}
+          </span>
+        </div>
+
         <ChevronDown size={14} className={open ? styles.chevronUp : ""} />
       </button>
 
@@ -75,7 +78,7 @@ const StatusSelect = ({
             <button
               key={s}
               type="button"
-              className={`${styles.option} ${s === value ? styles.optionActive : ""}`}
+              className={styles.option}
               onClick={() => {
                 onChange(s);
                 setOpen(false);

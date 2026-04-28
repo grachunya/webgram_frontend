@@ -22,12 +22,11 @@
   }
 
   th {
-    font-size: 0.8rem;
+    font-size: 0.875rem;
     font-weight: 600;
     color: var(--text-primary);
     background-color: var(--bg-primary);
     letter-spacing: 0.02em;
-    text-transform: uppercase;
   }
 
   tbody tr {
@@ -66,7 +65,6 @@
 
   &:hover {
     transform: translateY(-1px);
-
   }
 }
 
@@ -96,4 +94,3 @@
   color: var(--text-disabled);
   font-size: 0.9rem;
 }
-
