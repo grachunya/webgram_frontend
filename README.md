@@ -1,73 +1,93 @@
-# React + TypeScript + Vite
+# Webgram — Панель управления IP-телефонией
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-Currently, two official plugins are available:
+Webgram — современная система управления IP-телефонией для колл-центров. Позволяет совершать звонки через браузер, отслеживать статусы операторов, управлять очередями вызовов и вести телефонную книгу.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Возможности
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **WebRTC-телефония** — звонки прямо из браузера через SIP.js
+- **Управление операторами** — статусы, навыки, распределение вызовов
+- **Очереди звонков** — настраиваемые стратегии распределения
+- **Телефонная книга** — контакты
+- **Дашборд** — метрики колл-центра в реальном времени
+- **Аутентификация** — ролевая модель доступа
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Технологический стек
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+| Категория               | Технологии             |
+| ----------------------- | ---------------------- |
+| Фреймворк               | React 19, TypeScript   |
+| Роутинг                 | React Router 7         |
+| Состояние и кэширование | TanStack React Query 5 |
+| Формы                   | React Hook Form 7      |
+| HTTP-клиент             | Axios                  |
+| Телефония               | SIP.js (WebRTC)        |
+| Иконки                  | Lucide React           |
+| Стили                   | SCSS Modules           |
+| Сборка                  | Vite                   |
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Быстрый старт
+
+### Требования
+
+- Node.js ≥ 18
+- npm ≥ 9 или yarn ≥ 1.22
+
+### Установка
+
+```bash
+# Клонируйте репозиторий
+git clone https://github.com/grachunya/webgram_frontend
+cd webgram
+
+# Установите зависимости
+npm install
+
+# Запустите в режиме разработки
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Приложение будет доступно по адресу:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+https://localhost:5173
 ```
+
+### Сборка для продакшена
+
+```bash
+npm run build
+npm run preview # предпросмотр собранного приложения
+```
+
+---
+
+## Структура проекта
+
+```text
+src/
+├── api/              # API-клиенты и эндпоинты
+├── components/       # Переиспользуемые компоненты
+├── hooks/            # Кастомные хуки
+├── lib/              # Вспомогательные утилиты
+├── pages/            # Страницы приложения
+├── services/         # Отдельный сервисы
+└── styles/           # Глобальные стили и переменные
+```
+
+---
+
+## Лицензия
+
+MIT
+
+---
