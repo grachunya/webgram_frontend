@@ -1,0 +1,134 @@
+@use "../../styles/breakpoints" as bp;
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  flex: 1;
+  margin: -32px;
+
+  @include bp.md {
+    margin: -20px;
+  }
+
+  @include bp.sm {
+    margin: -16px;
+  }
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  gap: 48px;
+  padding: 100px 56px 50px 56px;
+
+  @include bp.md {
+    padding: 60px 40px;
+  }
+
+  @include bp.sm {
+    padding: 56px 32px;
+  }
+}
+
+.hero {
+  text-align: center;
+  max-width: 560px;
+}
+
+.heroIcon {
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.heroTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 12px;
+}
+
+.heroSubtitle {
+  font-size: 16px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  max-width: 660px;
+  width: 100%;
+}
+
+.sectionCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 28px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  box-shadow: var(--shadow-card);
+  transition:
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+
+  &:hover {
+    box-shadow: var(--shadow-elevated);
+    transform: translateY(-2px);
+  }
+}
+
+.sectionIcon {
+  color: var(--accent);
+}
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.sectionDesc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 56px;
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 500;
+  background-color: var(--bg-card);
+  border-top: 1px solid var(--border-default);
+
+  @include bp.md {
+    padding: 16px 40px;
+  }
+
+  @include bp.sm {
+    padding: 16px 32px;
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+.footerCopy {
+  color: var(--text-secondary);
+}

@@ -1,14 +1,14 @@
-@use '../../../styles/breakpoints' as bp;
+@use "../../../styles/breakpoints" as bp;
 
 .sidebarWrapper {
   width: fit-content;
-  height: 100%;
-
+  min-height: 100vh;
 }
 
 .sidebar {
   display: flex;
   flex-direction: column;
+  height: 100%;
   width: 240px;
   min-height: 100vh;
   padding: 16px 12px;
@@ -17,7 +17,6 @@
   border-right: 1px solid var(--border-default);
   overflow: hidden;
   transition: width var(--transition-base);
-
 
   &.collapsed {
     width: 70px;

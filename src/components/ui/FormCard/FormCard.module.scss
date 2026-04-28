@@ -1,4 +1,4 @@
-@use '../../../styles/breakpoints' as bp;
+@use "../../../styles/breakpoints" as bp;
 
 .page {
   display: flex;
@@ -7,12 +7,6 @@
   min-height: 100dvh;
   padding: 24px;
   background-color: var(--bg-primary);
-
-  @include bp.sm {
-    padding: 16px;
-    align-items: flex-start;
-    padding-top: 48px;
-  }
 }
 
 .card {

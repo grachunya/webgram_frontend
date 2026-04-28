@@ -35,7 +35,7 @@ export const setUser = (agentUuid: string, userUuid: string) =>
   }).then((r) => r.data);
 
 export const setStatus = (data: { agent_uuid: string; agent_status: AgentStatus }) =>
-  api.post('/agent/set-status', data).then((r) => r.data);
+  api.post('/agent-operator/set-status', data).then((r) => r.data);
 
 export const setQueues = (data: { agent_uuid: string; queue_uuids: string[] }) =>
   api.post('/agent/set-queues', data).then((r) => r.data);
