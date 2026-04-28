@@ -108,9 +108,7 @@ const OperatorsTable = ({
                     <span className={styles.muted}>Не назначено</span>
                   )}
                 </td>
-                <td className={`${styles.queueCell} ${styles.statusCall}`}>
-                  Не в разговоре
-                </td>
+
                 <td className={styles.selectCell}>
                   {agent ? (
                     <StatusSelect
@@ -126,7 +124,9 @@ const OperatorsTable = ({
                     <span className={styles.muted}>Не назначен</span>
                   )}
                 </td>
-
+                <td className={`${styles.queueCell} ${styles.statusCall}`}>
+                  Не в разговоре
+                </td>
                 <td>
                   <RoleBadge roleName={user.role.role_name} />
                 </td>

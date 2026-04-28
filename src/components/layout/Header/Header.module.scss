@@ -120,6 +120,29 @@
   }
 }
 
+.btnHangup {
+  background-color: var(--danger) !important;
+  border: 1px solid var(--danger) !important;
+  color: #fff !important;
+
+  &:hover {
+    background-color: var(--danger-hover) !important;
+    border: 1px solid var(--danger-hover) !important;
+  }
+
+  @include bp.sm {
+    span {
+      display: none;
+    }
+  }
+}
+
+.callError {
+  font-size: 0.78rem;
+  color: var(--danger);
+  white-space: nowrap;
+}
+
 .callGroup button {
   display: inline-flex;
   align-items: center;

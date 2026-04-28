@@ -1,4 +1,4 @@
-const agentUuid = localStorage.getItem("agentUuid");
+// const agentUuid = localStorage.getItem("agentUuid");
 
 type WsMessageListener = (data: unknown) => void;
 
@@ -81,5 +81,5 @@ export class WebSocketService {
 }
 
 export const globalWebSocketService = new WebSocketService(
-  `wss://voice-front-test.eisc.ttk.ru/?token=${agentUuid ?? ""}`,
+  `wss://вебграм.рф`,
 );
