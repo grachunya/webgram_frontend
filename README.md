@@ -2,7 +2,6 @@
 
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 Webgram — современная система управления IP-телефонией для колл-центров. Позволяет совершать звонки через браузер, отслеживать статусы операторов, управлять очередями вызовов и вести телефонную книгу.
 
