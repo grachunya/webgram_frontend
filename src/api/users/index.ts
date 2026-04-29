@@ -1,4 +1,4 @@
-import { api } from '@lib/api';
+import { api } from "@lib/api";
 
 export interface User {
   user_uuid: string;
@@ -12,7 +12,10 @@ export interface User {
     agent_name: string;
     agent_number: string | null;
     agent_password: string | null;
-    domain_uuid: string;
+    domain: {
+      domain_uuid: string;
+      domain_name: string;
+    };
     agent_status: string;
     queues: {
       queue_uuid: string;
@@ -38,20 +41,17 @@ export interface UpdatePasswordPayload {
   user_password: string;
 }
 
-export const getUsers = () =>
-  api.get<User[]>('/users').then((r) => r.data);
+export const getUsers = () => api.get<User[]>("/users").then((r) => r.data);
 
-export const getMe = () =>
-  api.get<User>('/users/show/me').then((r) => r.data);
+export const getMe = () => api.get<User>("/users/show/me").then((r) => r.data);
 
 export const createUser = (payload: CreateUserPayload) =>
-  api.post<User>('/users', payload).then((r) => r.data);
+  api.post<User>("/users", payload).then((r) => r.data);
 
 export const updateUser = (payload: UpdateUserPayload) =>
-  api.put<User>('/users', payload).then((r) => r.data);
+  api.put<User>("/users", payload).then((r) => r.data);
 
 export const updatePassword = (uuid: string, payload: UpdatePasswordPayload) =>
   api.patch<User>(`/users/${uuid}`, payload).then((r) => r.data);
 
-export const deleteUser = (uuid: string) =>
-  api.delete(`/users/${uuid}`);
+export const deleteUser = (uuid: string) => api.delete(`/users/${uuid}`);
