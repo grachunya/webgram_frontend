@@ -1,5 +1,3 @@
-// const agentUuid = localStorage.getItem("agentUuid");
-
 type WsMessageListener = (data: unknown) => void;
 
 export class WebSocketService {

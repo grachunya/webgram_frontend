@@ -10,8 +10,8 @@ import { useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import HistoryCall from "./pages/HistoryCall/HistoryCall";
 import PhoneBookPage from "./pages/PhoneBook/PhoneBook";
-import { fetchCurrentUser } from "./store/slices/userSlice";
 import { useAppDispatch } from "./store/hooks";
+import { fetchCurrentUser } from "./store/slices/userSlice";
 
 const AuthGate = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useAppDispatch();
@@ -56,9 +56,9 @@ const RoleGuard = ({
 };
 
 const App = () => (
-  <BrowserRouter>
+  <BrowserRouter basename={"/app"}>
     <Routes>
-      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/" element={<Navigate to="login" replace />} />
       <Route path="/login" element={<Login />} />
 
       <Route

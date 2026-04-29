@@ -1,9 +1,10 @@
+import { useAppDispatch } from "@/store/hooks";
+import { fetchCurrentUser } from "@/store/slices/userSlice";
 import type { AgentStatus } from "@api/agents";
 import { setStatus as setStatusApi } from "@api/agents";
 import { useAuth } from "@hooks/useAuth";
 import { useCall } from "@hooks/useCall";
 import { useCurrentUser } from "@hooks/useCurrentUser";
-import { useQueryClient } from "@tanstack/react-query";
 import Button from "@ui/Button/Button";
 import StatusSelect from "@ui/StatusSelect/StatusSelect";
 import { LogOut, Phone, PhoneCall, PhoneOff } from "lucide-react";
@@ -12,7 +13,7 @@ import styles from "./Header.module.scss";
 const Header = () => {
   const { logout } = useAuth();
   const { data: user } = useCurrentUser();
-  const qc = useQueryClient();
+  const dispatch = useAppDispatch();
 
   const {
     phone,
@@ -30,12 +31,17 @@ const Header = () => {
 
   const handleStatusChange = async (status: AgentStatus) => {
     if (!user?.agent) return;
-    await setStatusApi({
-      agent_uuid: user.agent.agent_uuid,
-      agent_status: status,
-    });
-    qc.invalidateQueries({ queryKey: ["currentUser"] });
-    qc.invalidateQueries({ queryKey: ["users"] });
+
+    try {
+      await setStatusApi({
+        agent_uuid: user.agent.agent_uuid,
+        agent_status: status,
+      });
+
+      dispatch(fetchCurrentUser());
+    } catch (error) {
+      console.error("Ошибка смены статуса:", error);
+    }
   };
 
   return (
