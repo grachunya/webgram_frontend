@@ -1,9 +1,9 @@
-# Webgram — Панель управления IP-телефонией
+# Вебграм — Панель управления IP-телефонией
 
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
-Webgram — современная система управления IP-телефонией для колл-центров. Позволяет совершать звонки через браузер, отслеживать статусы операторов, управлять очередями вызовов и вести телефонную книгу.
+Вебграм — современная система управления IP-телефонией для колл-центров. Позволяет совершать звонки через браузер, отслеживать статусы операторов, управлять очередями вызовов и вести телефонную книгу.
 
 ---
 
@@ -45,8 +45,8 @@ Webgram — современная система управления IP-тел
 
 ```bash
 # Клонируйте репозиторий
-git clone https://github.com/grachunya/webgram_frontend
-cd webgram
+git clone https://github.com/grachunya/Вебграм_frontend
+cd Вебграм
 
 # Установите зависимости
 npm install

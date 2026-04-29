@@ -6,13 +6,37 @@ import Login from "@pages/Login/Login";
 import NotFound from "@pages/NotFound/NotFound";
 import Operators from "@pages/Operators/Operators";
 import Users from "@pages/Users/Users";
+import { useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import HistoryCall from "./pages/HistoryCall/HistoryCall";
 import PhoneBookPage from "./pages/PhoneBook/PhoneBook";
+import { fetchCurrentUser } from "./store/slices/userSlice";
+import { useAppDispatch } from "./store/hooks";
 
 const AuthGate = ({ children }: { children: React.ReactNode }) => {
-  const { data, isLoading, isError } = useCurrentUser();
+  const dispatch = useAppDispatch();
+  const { data, isLoading, isError, isInitialized } = useCurrentUser();
 
-  if (isLoading) return null;
+  useEffect(() => {
+    if (!isInitialized && !data) {
+      dispatch(fetchCurrentUser());
+    }
+  }, [dispatch, isInitialized, data]);
+
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div>Загрузка...</div>
+      </div>
+    );
+  }
   if (isError || !data) return <Navigate to="/login" replace />;
   return <>{children}</>;
 };
@@ -46,6 +70,7 @@ const App = () => (
       >
         <Route path="/home" element={<Home />} />
         <Route path="/phone-book" element={<PhoneBookPage />} />
+        <Route path="/history-call" element={<HistoryCall />} />
         <Route
           path="/users"
           element={

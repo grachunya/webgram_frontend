@@ -22,7 +22,7 @@ const Login = () => {
 
   return (
     <FormCard>
-      <h1 className={styles.brandTitle}>Webgram</h1>
+      <h1 className={styles.brandTitle}>Вебграм</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div className={styles.form}>

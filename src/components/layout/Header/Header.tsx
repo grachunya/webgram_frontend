@@ -6,7 +6,7 @@ import { useCurrentUser } from "@hooks/useCurrentUser";
 import { useQueryClient } from "@tanstack/react-query";
 import Button from "@ui/Button/Button";
 import StatusSelect from "@ui/StatusSelect/StatusSelect";
-import { LogOut, Phone, PhoneOff, PhoneCall } from "lucide-react";
+import { LogOut, Phone, PhoneCall, PhoneOff } from "lucide-react";
 import styles from "./Header.module.scss";
 
 const Header = () => {
@@ -42,7 +42,7 @@ const Header = () => {
     <header className={styles.header}>
       <div className={styles.logo}>
         <PhoneCall size={22} />
-        <span>Webgram</span>
+        <span>Вебграм</span>
       </div>
 
       <div className={styles.statusSelect}>
@@ -66,10 +66,7 @@ const Header = () => {
         />
 
         {inCall ? (
-          <Button
-            className={styles.btnHangup}
-            onClick={handleHangup}
-          >
+          <Button className={styles.btnHangup} onClick={handleHangup}>
             <PhoneOff size={16} />
             <span>{isActive && timer ? timer : callStatus}</span>
           </Button>
