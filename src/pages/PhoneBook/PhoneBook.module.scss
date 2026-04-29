@@ -1,0 +1,53 @@
+@use "../../styles/breakpoints" as bp;
+
+.page {
+  max-width: 100vw;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+
+  @include bp.sm {
+    margin-bottom: 16px;
+  }
+}
+
+.title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+
+  @include bp.sm {
+    font-size: 1.15rem;
+  }
+}
+
+.toolbar button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+
+  @include bp.sm {
+    padding: 8px 12px;
+
+    span {
+      display: none;
+    }
+  }
+}
+
+.loading {
+  color: var(--text-secondary);
+}
+
+.error {
+  padding: 40px 16px;
+  text-align: center;
+  color: var(--danger);
+  font-size: 0.9rem;
+}

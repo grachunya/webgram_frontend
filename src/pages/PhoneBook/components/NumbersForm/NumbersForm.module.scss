@@ -1,0 +1,18 @@
+form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 50px;
+}
+
+.serverError {
+  font-size: 0.8rem;
+  color: var(--danger);
+  margin-bottom: 12px;
+}

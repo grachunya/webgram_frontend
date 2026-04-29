@@ -1,12 +1,13 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Login from "@pages/Login/Login";
-import Home from "@pages/Home/Home";
-import Users from "@pages/Users/Users";
-import Operators from "@pages/Operators/Operators";
-import AccessDenied from "@pages/AccessDenied/AccessDenied";
-import NotFound from "@pages/NotFound/NotFound";
 import Layout from "@components/layout/Layout/Layout";
 import { useCurrentUser } from "@hooks/useCurrentUser";
+import AccessDenied from "@pages/AccessDenied/AccessDenied";
+import Home from "@pages/Home/Home";
+import Login from "@pages/Login/Login";
+import NotFound from "@pages/NotFound/NotFound";
+import Operators from "@pages/Operators/Operators";
+import Users from "@pages/Users/Users";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import PhoneBookPage from "./pages/PhoneBook/PhoneBook";
 
 const AuthGate = ({ children }: { children: React.ReactNode }) => {
   const { data, isLoading, isError } = useCurrentUser();
@@ -16,10 +17,17 @@ const AuthGate = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
-const RoleGuard = ({ role, children }: { role: string; children: React.ReactNode }) => {
+const RoleGuard = ({
+  role,
+  children,
+}: {
+  role: string;
+  children: React.ReactNode;
+}) => {
   const { data: user } = useCurrentUser();
 
-  if (user?.role?.role_name !== role) return <Navigate to="/access-denied" replace />;
+  if (user?.role?.role_name !== role)
+    return <Navigate to="/access-denied" replace />;
   return <>{children}</>;
 };
 
@@ -37,6 +45,7 @@ const App = () => (
         }
       >
         <Route path="/home" element={<Home />} />
+        <Route path="/phone-book" element={<PhoneBookPage />} />
         <Route
           path="/users"
           element={
