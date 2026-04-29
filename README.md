@@ -45,8 +45,7 @@
 
 ```bash
 # Клонируйте репозиторий
-git clone https://github.com/grachunya/Вебграм_frontend
-cd Вебграм
+git clone https://github.com/grachunya/webgram_frontend .
 
 # Установите зависимости
 npm install
@@ -80,6 +79,7 @@ src/
 ├── lib/              # Вспомогательные утилиты
 ├── pages/            # Страницы приложения
 ├── services/         # Отдельный сервисы
+├── store/            # Глобальное хранилище
 └── styles/           # Глобальные стили и переменные
 ```
 
