@@ -11,7 +11,7 @@ interface SipProviderProps {
 }
 
 const SIP_CONFIG: Omit<Config, "username" | "password" | "domain"> = {
-  wsServer: "wss://xn--80abcfi9b0a.xn--p1ai:7443",
+  wsServer: "wss://xn--80abcfi9b0a.xn--p1ai/sip-socket",
 };
 
 export default function SipProvider({ user, children }: SipProviderProps) {
