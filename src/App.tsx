@@ -8,6 +8,7 @@ import Operators from "@pages/Operators/Operators";
 import Users from "@pages/Users/Users";
 import { useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import Dashboard from "./pages/Dashboard/Dashboard";
 import HistoryCall from "./pages/HistoryCall/HistoryCall";
 import PhoneBookPage from "./pages/PhoneBook/PhoneBook";
 import { useAppDispatch } from "./store/hooks";
@@ -69,6 +70,7 @@ const App = () => (
         }
       >
         <Route path="/home" element={<Home />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/phone-book" element={<PhoneBookPage />} />
         <Route path="/history-call" element={<HistoryCall />} />
         <Route

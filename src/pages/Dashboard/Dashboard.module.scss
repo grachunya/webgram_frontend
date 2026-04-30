@@ -1,0 +1,170 @@
+@use "../../styles/breakpoints" as bp;
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  flex: 1;
+  margin: -32px;
+
+  @include bp.md {
+    margin: -20px;
+  }
+
+  @include bp.sm {
+    margin: -16px;
+  }
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 40px;
+
+  @include bp.md {
+    padding: 24px 28px;
+  }
+
+  @include bp.sm {
+    padding: 20px 16px;
+  }
+}
+
+.statusError {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 0;
+  font-size: 15px;
+  color: var(--danger);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-template-areas: "resources calls";
+  gap: 24px;
+
+  @include bp.lg {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "resources"
+      "calls";
+  }
+}
+
+.resourcesPanel {
+  grid-area: resources;
+}
+
+.callsPanel {
+  grid-area: calls;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+
+  @include bp.sm {
+    padding: 18px;
+  }
+}
+
+.sectionTitle {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.chartsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+
+  @include bp.md {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include bp.sm {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chartCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.chartLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.chartWrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+
+  :global(svg),
+  :global(svg *),
+  :global(.recharts-wrapper),
+  :global(.recharts-wrapper *),
+  :global(.recharts-sector),
+  :global(.recharts-sector:focus),
+  :global(.recharts-sector:focus-visible) {
+    outline: none;
+  }
+}
+
+.chartCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.chartPercent {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.chartInfo {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.callsChartContainer {
+  display: flex;
+  justify-content: center;
+  max-width: 240px;
+  margin: 0 auto;
+}
+
+.callsCount {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
