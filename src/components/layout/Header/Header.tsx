@@ -1,19 +1,19 @@
-import { useAppDispatch } from "@/store/hooks";
-import { fetchCurrentUser } from "@/store/slices/userSlice";
 import type { AgentStatus } from "@api/agents";
 import { setStatus as setStatusApi } from "@api/agents";
 import { useAuth } from "@hooks/useAuth";
 import { useCall } from "@hooks/useCall";
 import { useCurrentUser } from "@hooks/useCurrentUser";
+import { useOperatorPanel } from "@services/operatorPanel/useOperatorPanel";
 import Button from "@ui/Button/Button";
 import StatusSelect from "@ui/StatusSelect/StatusSelect";
 import { LogOut, Phone, PhoneCall, PhoneOff } from "lucide-react";
+import { useMemo } from "react";
 import styles from "./Header.module.scss";
 
 const Header = () => {
   const { logout } = useAuth();
   const { data: user } = useCurrentUser();
-  const dispatch = useAppDispatch();
+  const { lastMessage } = useOperatorPanel();
 
   const {
     phone,
@@ -27,7 +27,16 @@ const Header = () => {
     handleHangup,
   } = useCall();
 
-  const agentStatus = (user?.agent?.agent_status || "") as AgentStatus | "";
+  const agentStatus = useMemo(() => {
+    const base = (user?.agent?.agent_status || "") as AgentStatus | "";
+    if (
+      lastMessage?.type === "AGENT_DATA" &&
+      lastMessage.data.agent_uuid === user?.agent?.agent_uuid
+    ) {
+      return lastMessage.data.agent_status as AgentStatus | "";
+    }
+    return base;
+  }, [user?.agent?.agent_status, user?.agent?.agent_uuid, lastMessage]);
 
   const handleStatusChange = async (status: AgentStatus) => {
     if (!user?.agent) return;
@@ -37,8 +46,6 @@ const Header = () => {
         agent_uuid: user.agent.agent_uuid,
         agent_status: status,
       });
-
-      dispatch(fetchCurrentUser());
     } catch (error) {
       console.error("Ошибка смены статуса:", error);
     }

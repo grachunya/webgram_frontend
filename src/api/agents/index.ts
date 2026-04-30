@@ -39,3 +39,6 @@ export const setStatus = (data: { agent_uuid: string; agent_status: AgentStatus 
 
 export const setQueues = (data: { agent_uuid: string; queue_uuids: string[] }) =>
   api.post('/agent/set-queues', data).then((r) => r.data);
+
+export const upgradeSocket = (agentUuid: string) =>
+  api.post(`/agent/upgrade-socket/${agentUuid}`).then((r) => r.data);

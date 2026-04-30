@@ -1,9 +1,10 @@
 import type { AgentStatus, FreeAgent, Queue } from "@api/agents";
 import type { User } from "@api/users";
+import { useOperatorPanel } from "@services/operatorPanel/useOperatorPanel";
 import RoleBadge from "@ui/RoleBadge/RoleBadge";
 import Select from "@ui/Select/Select";
 import StatusSelect from "@ui/StatusSelect/StatusSelect";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import styles from "./OperatorsTable.module.scss";
 import QueuePicker from "./QueuePicker/QueuePicker";
 
@@ -30,6 +31,17 @@ const OperatorsTable = ({
   const [queueSelections, setQueueSelections] = useState<
     Record<string, string[]>
   >({});
+  const { lastMessage } = useOperatorPanel();
+
+  const liveStatus = useMemo(() => {
+    if (lastMessage?.type === "AGENT_DATA") {
+      return {
+        uuid: lastMessage.data.agent_uuid,
+        status: lastMessage.data.agent_status,
+      };
+    }
+    return null;
+  }, [lastMessage]);
 
   const agentOptions = freeAgents.map((a) => ({
     value: a.agent_uuid,
@@ -112,7 +124,11 @@ const OperatorsTable = ({
                 <td className={styles.selectCell}>
                   {agent ? (
                     <StatusSelect
-                      value={agent.agent_status as AgentStatus}
+                      value={
+                        (liveStatus?.uuid === agent.agent_uuid
+                          ? liveStatus.status
+                          : agent.agent_status) as AgentStatus
+                      }
                       onChange={(s) =>
                         onSetStatus({
                           agent_uuid: agent.agent_uuid,

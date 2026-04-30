@@ -49,8 +49,8 @@ export class SipConnection {
       contactName: username,
       viaHost: domain,
       contactParams: { transport: "wss" },
-      logBuiltinEnabled: true,
-      logConfiguration: true,
+      logBuiltinEnabled: false,
+      logConfiguration: false,
       reconnectionDelay: 5,
       reconnectionAttempts: 999,
       sessionDescriptionHandlerFactoryOptions: {
