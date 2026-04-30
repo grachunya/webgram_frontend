@@ -17,6 +17,10 @@ export const useCall = () => {
   const [error, setError] = useState<string | null>(null);
   const [timerDisplay, setTimerDisplay] = useState<string | null>(null);
 
+  const [transferTarget, setTransferTarget] = useState("");
+  const [transferOpen, setTransferOpen] = useState(false);
+  const [transferError, setTransferError] = useState<string | null>(null);
+
   const secondsRef = useRef(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -54,6 +58,19 @@ export const useCall = () => {
     };
   }, [isActive]);
 
+  const prevInCallRef = useRef(inCall);
+  useEffect(() => {
+    if (prevInCallRef.current && !inCall) {
+      const id = setTimeout(() => {
+        setTransferTarget("");
+        setTransferOpen(false);
+        setTransferError(null);
+      }, 0);
+      return () => clearTimeout(id);
+    }
+    prevInCallRef.current = inCall;
+  }, [inCall]);
+
   const handlePhoneChange = useCallback((value: string) => {
     setError(null);
     if (value === "" || ALLOWED.test(value)) {
@@ -83,6 +100,33 @@ export const useCall = () => {
     await client?.endCall();
   }, [client]);
 
+  const handleTransferTargetChange = useCallback((value: string) => {
+    setTransferError(null);
+    if (value === "" || ALLOWED.test(value)) {
+      setTransferTarget(value);
+    }
+  }, []);
+
+  const handleTransfer = useCallback(async () => {
+    const target = transferTarget.trim();
+    if (!target) {
+      setTransferError("Введите номер");
+      return;
+    }
+    if (!client) {
+      setTransferError("SIP не подключен");
+      return;
+    }
+    try {
+      await client.transfer(target);
+      setTransferOpen(false);
+      setTransferTarget("");
+      setTransferError(null);
+    } catch {
+      setTransferError("Не удалось перевести");
+    }
+  }, [transferTarget, client]);
+
   return {
     phone,
     error,
@@ -93,5 +137,11 @@ export const useCall = () => {
     handlePhoneChange,
     handleCall,
     handleHangup,
+    transferOpen,
+    transferTarget,
+    transferError,
+    handleTransferToggle: useCallback(() => setTransferOpen((v) => !v), []),
+    handleTransferTargetChange,
+    handleTransfer,
   };
 };

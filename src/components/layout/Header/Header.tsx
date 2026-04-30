@@ -6,7 +6,7 @@ import { useCurrentUser } from "@hooks/useCurrentUser";
 import { useOperatorPanel } from "@services/operatorPanel/useOperatorPanel";
 import Button from "@ui/Button/Button";
 import StatusSelect from "@ui/StatusSelect/StatusSelect";
-import { LogOut, Phone, PhoneCall, PhoneOff } from "lucide-react";
+import { ArrowRightLeft, LogOut, Phone, PhoneCall, PhoneOff } from "lucide-react";
 import { useMemo } from "react";
 import styles from "./Header.module.scss";
 
@@ -25,6 +25,12 @@ const Header = () => {
     handlePhoneChange,
     handleCall,
     handleHangup,
+    transferOpen,
+    transferTarget,
+    transferError,
+    handleTransferToggle,
+    handleTransferTargetChange,
+    handleTransfer,
   } = useCall();
 
   const agentStatus = useMemo(() => {
@@ -79,10 +85,43 @@ const Header = () => {
         />
 
         {inCall ? (
-          <Button className={styles.btnHangup} onClick={handleHangup}>
-            <PhoneOff size={16} />
-            <span>{isActive && timer ? timer : callStatus}</span>
-          </Button>
+          <>
+            <Button className={styles.btnHangup} onClick={handleHangup}>
+              <PhoneOff size={16} />
+              <span>{isActive && timer ? timer : callStatus}</span>
+            </Button>
+            {isActive && (
+              <div className={styles.transferWrapper}>
+                <Button
+                  className={styles.btnTransfer}
+                  onClick={handleTransferToggle}
+                >
+                  <ArrowRightLeft size={16} />
+                </Button>
+                {transferOpen && (
+                  <div className={styles.transferDropdown}>
+                    <input
+                      className={styles.transferInput}
+                      type="tel"
+                      placeholder="Номер для перевода"
+                      value={transferTarget}
+                      onChange={(e) => handleTransferTargetChange(e.target.value)}
+                    />
+                    <Button
+                      className={styles.btnTransferConfirm}
+                      onClick={handleTransfer}
+                      disabled={!transferTarget.trim()}
+                    >
+                      <ArrowRightLeft size={14} />
+                    </Button>
+                    {transferError && (
+                      <span className={styles.transferError}>{transferError}</span>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+          </>
         ) : (
           <Button
             className={styles.btnCall}

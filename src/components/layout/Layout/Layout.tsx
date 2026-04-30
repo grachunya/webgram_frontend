@@ -4,6 +4,7 @@ import SipProvider from "@services/sip/SipProvider";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "../Header/Header";
+import { IncomingCallOverlay } from "../IncomingCallOverlay/IncomingCallOverlay";
 import Sidebar from "../Sidebar/Sidebar";
 import styles from "./Layout.module.scss";
 
@@ -12,6 +13,7 @@ const LayoutContent = () => {
 
   return (
     <OperatorPanelProvider>
+      <IncomingCallOverlay />
       <div className={styles.layout}>
         <Header />
         <div className={styles.body}>

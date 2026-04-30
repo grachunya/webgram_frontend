@@ -137,6 +137,84 @@
   }
 }
 
+.btnTransfer {
+  background-color: var(--accent) !important;
+  border: 1px solid var(--accent) !important;
+  color: var(--accent-text) !important;
+
+  &:hover {
+    background-color: var(--accent-hover) !important;
+    border-color: var(--accent-hover) !important;
+  }
+}
+
+.transferWrapper {
+  position: relative;
+}
+
+.transferDropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-elevated);
+  z-index: 100;
+}
+
+.transferInput {
+  width: 200px;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition-fast);
+
+  &::placeholder {
+    color: var(--text-disabled);
+  }
+
+  &:focus {
+    border-color: var(--accent);
+    outline: none;
+  }
+
+  @include bp.sm {
+    width: 110px;
+    font-size: 0.8rem;
+  }
+}
+
+.btnTransferConfirm {
+  background-color: var(--accent) !important;
+  border: 1px solid var(--accent) !important;
+  color: var(--accent-text) !important;
+  flex-shrink: 0;
+
+  &:hover {
+    background-color: var(--accent-hover) !important;
+    border-color: var(--accent-hover) !important;
+  }
+
+  &:disabled {
+    background-color: var(--accent-disabled) !important;
+    border: none !important;
+  }
+}
+
+.transferError {
+  font-size: 0.75rem;
+  color: var(--danger);
+  white-space: nowrap;
+}
+
 .callError {
   font-size: 0.78rem;
   color: var(--danger);
