@@ -1,10 +1,18 @@
-import type { AgentStatus, FreeAgent, Queue } from "@api/agents";
+import {
+  endCall,
+  spyAgent,
+  type AgentStatus,
+  type FreeAgent,
+  type Queue,
+} from "@api/agents";
 import type { User } from "@api/users";
+import { useCurrentUser } from "@hooks/useCurrentUser";
 import { useOperatorPanel } from "@services/operatorPanel/useOperatorPanel";
 import RoleBadge from "@ui/RoleBadge/RoleBadge";
 import Select from "@ui/Select/Select";
 import StatusSelect from "@ui/StatusSelect/StatusSelect";
-import { useMemo, useState } from "react";
+import { Mic, PhoneOff } from "lucide-react";
+import { useCallback, useMemo, useState } from "react";
 import styles from "./OperatorsTable.module.scss";
 import QueuePicker from "./QueuePicker/QueuePicker";
 
@@ -31,7 +39,25 @@ const OperatorsTable = ({
   const [queueSelections, setQueueSelections] = useState<
     Record<string, string[]>
   >({});
-  const { lastMessage } = useOperatorPanel();
+  const { lastMessage, calls } = useOperatorPanel();
+  const { data: me } = useCurrentUser();
+
+  const handleEndCall = useCallback((callUuid: string) => {
+    endCall(callUuid).catch(() => {});
+  }, []);
+
+  const handleSpy = useCallback(
+    (callUuid: string, victimNumber: string) => {
+      if (!me?.agent) return;
+      spyAgent({
+        call_uuid: callUuid,
+        victim_agent_number: victimNumber,
+        spy_agent_number: me.agent.agent_number ?? "",
+        domain_uuid: me.agent.domain.domain_uuid,
+      }).catch(() => {});
+    },
+    [me],
+  );
 
   const liveStatus = useMemo(() => {
     if (lastMessage?.type === "AGENT_DATA") {
@@ -141,7 +167,53 @@ const OperatorsTable = ({
                   )}
                 </td>
                 <td className={`${styles.queueCell} ${styles.statusCall}`}>
-                  Не в разговоре
+                  {agent ? (
+                    (() => {
+                      const agentCalls = calls[agent.agent_uuid];
+                      const call = agentCalls?.[0];
+                      if (!call) {
+                        return <span className={styles.muted}>Нет звонка</span>;
+                      }
+                      return (
+                        <div className={styles.callBlock}>
+                          <span
+                            className={
+                              call.direction === "inbound"
+                                ? styles.inbound
+                                : styles.outbound
+                            }
+                          >
+                            {call.direction === "inbound"
+                              ? "Входящий"
+                              : "Исходящий"}
+                          </span>
+                          <div className={styles.callActions}>
+                            <button
+                              className={`${styles.callBtn} ${styles.spyBtn}`}
+                              title="Прослушать"
+                              onClick={() =>
+                                handleSpy(
+                                  call.call_uuid,
+                                  agent.agent_number ?? "",
+                                )
+                              }
+                            >
+                              <Mic size={14} />
+                            </button>
+                            <button
+                              className={`${styles.callBtn} ${styles.endBtn}`}
+                              title="Сбросить"
+                              onClick={() => handleEndCall(call.call_uuid)}
+                            >
+                              <PhoneOff size={14} />
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })()
+                  ) : (
+                    <span className={styles.muted}>—</span>
+                  )}
                 </td>
                 <td>
                   <RoleBadge roleName={user.role.role_name} />

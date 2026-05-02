@@ -61,8 +61,55 @@
 }
 
 .statusCall {
-  color: var(--text-secondary);
   font-size: 0.875rem;
+}
+
+.callBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.callActions {
+  display: flex;
+  gap: 8px;
+}
+
+.inbound {
+  font-size: 0.875rem;
+  color: #16a34a;
+}
+
+.outbound {
+  font-size: 0.875rem;
+  color: #dc2626;
+}
+
+.callBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.spyBtn {
+  background: #2563eb;
+  color: #fff;
+}
+
+.endBtn {
+  background: #dc2626;
+  color: #fff;
 }
 
 .queueCell {

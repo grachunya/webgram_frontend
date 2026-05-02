@@ -14,15 +14,24 @@ export interface AgentDataPayload {
   user_uuid: string;
 }
 
-export interface OperatorPanelMessage {
-  type: "AGENT_DATA";
-  data: AgentDataPayload;
+export interface CallEntry {
+  call_uuid: string;
+  direction: "inbound" | "outbound";
 }
+
+export interface UpdateCallsPayload {
+  [agent_uuid: string]: CallEntry[];
+}
+
+export type OperatorPanelMessage =
+  | { type: "AGENT_DATA"; data: AgentDataPayload }
+  | { type: "UPDATE_CALLS"; data: UpdateCallsPayload };
 
 interface OperatorPanelState {
   status: "connecting" | "open" | "closed";
   error: string | null;
   lastMessage: OperatorPanelMessage | null;
+  calls: UpdateCallsPayload;
 }
 
 export default function OperatorPanelProvider({
@@ -40,6 +49,7 @@ export default function OperatorPanelProvider({
     status: "closed",
     error: null,
     lastMessage: null,
+    calls: {},
   });
 
   useEffect(() => {
@@ -74,11 +84,17 @@ export default function OperatorPanelProvider({
       const parsed: unknown = JSON.parse(e.data);
       if (typeof parsed === "object" && parsed !== null && "type" in parsed) {
         const msg = parsed as OperatorPanelMessage;
+        if (msg.type === "UPDATE_CALLS") {
+          setState((s) => ({ ...s, calls: msg.data }));
+          return;
+        }
         setState((s) => {
           const prev = s.lastMessage?.data;
           const next = msg.data;
           if (
             prev &&
+            "agent_uuid" in prev &&
+            "agent_uuid" in next &&
             prev.agent_uuid === next.agent_uuid &&
             prev.agent_status === next.agent_status
           ) {

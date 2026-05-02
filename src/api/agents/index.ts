@@ -42,3 +42,14 @@ export const setQueues = (data: { agent_uuid: string; queue_uuids: string[] }) =
 
 export const upgradeSocket = (agentUuid: string) =>
   api.post(`/agent/upgrade-socket/${agentUuid}`).then((r) => r.data);
+
+export const endCall = (callUuid: string) =>
+  api.post(`/agent/end-call/${callUuid}`).then((r) => r.data);
+
+export const spyAgent = (params: {
+  call_uuid: string;
+  victim_agent_number: string;
+  spy_agent_number: string;
+  domain_uuid: string;
+}) =>
+  api.post(`/agent/spy-agent/${params.call_uuid}`, null, { params }).then((r) => r.data);
