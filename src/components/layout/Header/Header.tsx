@@ -4,16 +4,22 @@ import { useAuth } from "@hooks/useAuth";
 import { useCall } from "@hooks/useCall";
 import { useCurrentUser } from "@hooks/useCurrentUser";
 import { useOperatorPanel } from "@services/operatorPanel/useOperatorPanel";
+import { SipContext } from "@services/sip/sipContext";
 import Button from "@ui/Button/Button";
 import StatusSelect from "@ui/StatusSelect/StatusSelect";
 import { ArrowRightLeft, LogOut, Phone, PhoneCall, PhoneOff } from "lucide-react";
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
 import styles from "./Header.module.scss";
 
 const Header = () => {
   const { logout } = useAuth();
   const { data: user } = useCurrentUser();
   const { lastMessage } = useOperatorPanel();
+  const sipCtx = useContext(SipContext);
+
+  const sipOnline =
+    sipCtx?.sipStatus === "Подключен" ||
+    sipCtx?.sipStatus === "Зарегистрирован";
 
   const {
     phone,
@@ -73,6 +79,17 @@ const Header = () => {
           compact
         />
       </div>
+
+      {user?.agent && (
+        <div
+          className={`${styles.sipBadge} ${sipOnline ? styles.sipOnline : styles.sipOffline}`}
+        >
+          <span className={styles.sipDot} />
+          <span className={styles.sipNumber}>
+            {user.agent.agent_number || "—"}
+          </span>
+        </div>
+      )}
 
       <div className={styles.callGroup}>
         <input

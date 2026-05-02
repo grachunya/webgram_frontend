@@ -8,7 +8,7 @@ interface HistoryCallTableProps {
 }
 
 const DirectionBadge = ({ direction }: { direction: string }) => {
-  const isIncoming = direction === "incoming" || direction === "входящий";
+  const isIncoming = direction === "inbound" ;
 
   return (
     <span
@@ -30,7 +30,8 @@ const HistoryCallTable = ({ historyCall }: HistoryCallTableProps) => {
       <table className={styles.table}>
         <thead>
           <tr>
-            <th>Номер</th>
+            <th>Номер звонящего</th>
+            <th>Номер получателя</th>
             <th>Тип вызова</th>
             <th>Длительность</th>
             <th>Дата</th>
@@ -39,6 +40,7 @@ const HistoryCallTable = ({ historyCall }: HistoryCallTableProps) => {
         <tbody>
           {historyCall.map((u) => (
             <tr key={u.start_stamp}>
+              <td className={styles.numberCell}>{u.caller_id_number}</td>
               <td className={styles.numberCell}>{u.destination_number}</td>
               <td className={styles.typeCell}>
                 <DirectionBadge direction={u.direction} />

@@ -45,6 +45,69 @@
   min-width: 120px;
 }
 
+.sipBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: var(--radius-sm, 6px);
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+
+  @include bp.sm {
+    padding: 3px 8px;
+    font-size: 0.75rem;
+  }
+}
+
+.sipOnline {
+  background-color: var(--success-bg);
+  border: 1px solid var(--success);
+  color: var(--success);
+
+  .sipDot {
+    background-color: var(--success);
+  }
+}
+
+.sipOffline {
+  background-color: var(--danger-bg);
+  border: 1px solid var(--danger);
+  color: var(--danger);
+
+  .sipDot {
+    background-color: var(--danger);
+  }
+}
+
+.sipDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: pulse 2s ease-in-out infinite;
+
+  @include bp.sm {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
 .callGroup {
   display: flex;
   align-items: center;

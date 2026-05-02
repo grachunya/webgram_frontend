@@ -1,14 +1,14 @@
+import { useCurrentUser } from "@hooks/useCurrentUser";
 import { memo, useCallback, useMemo, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useCurrentUser } from "@hooks/useCurrentUser";
-import { sidebarItems } from "./sidebarItems";
 import styles from "./Sidebar.module.scss";
+import { sidebarItems, type UserRole } from "./sidebarItems";
 
 const Sidebar = memo(function Sidebar() {
   const [collapsed, setCollapsed] = useState(true);
 
   const { data: user } = useCurrentUser();
-  const userRole = user?.role?.role_name;
+  const userRole = user?.role?.role_name as UserRole | undefined;
 
   const handleMouseEnter = useCallback(() => {
     setCollapsed(false);
@@ -23,9 +23,12 @@ const Sidebar = memo(function Sidebar() {
   }, []);
 
   const visibleItems = useMemo(() => {
-    return sidebarItems.filter(
-      (item) => !item.requiredRole || item.requiredRole === userRole,
-    );
+    return sidebarItems.filter((item) => {
+      if (!item.allowedRoles) return true;
+      if (!userRole) return false;
+
+      return item.allowedRoles.includes(userRole);
+    });
   }, [userRole]);
 
   return (
