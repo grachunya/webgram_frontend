@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export interface SystemResources {
   ram: { total_gb: number; used_gb: number; free_gb: number };
@@ -15,6 +15,7 @@ interface DashboardData {
 }
 
 const WS_URL = "wss://xn--80abcfi9b0a.xn--p1ai/backend/dashboard";
+const FLUSH_MS = 1000;
 
 export const useDashboardSocket = (): DashboardData => {
   const [resources, setResources] = useState<SystemResources | null>(null);
@@ -22,25 +23,31 @@ export const useDashboardSocket = (): DashboardData => {
   const [connectionState, setConnectionState] =
     useState<ConnectionState>("connecting");
 
-  const handleMessage = useCallback((event: MessageEvent) => {
-    const parsed = JSON.parse(event.data);
+  const resourcesRef = useRef<SystemResources | null>(null);
+  const callsCountRef = useRef<number | null>(null);
 
-    if (parsed.type === "SYSTEM_RESOURCES_MONITORING" && parsed.data) {
-      setResources(parsed.data);
-    }
-
-    if (parsed.type === "CALL_COUNT" && parsed.data) {
-      setCallsCount(parsed.data.calls_count);
-    }
+  useEffect(() => {
+    const id = setInterval(() => {
+      setResources(resourcesRef.current);
+      setCallsCount(callsCountRef.current);
+    }, FLUSH_MS);
+    return () => clearInterval(id);
   }, []);
 
   useEffect(() => {
     let isUnmounted = false;
-
     const ws = new WebSocket(WS_URL);
 
     ws.onopen = () => setConnectionState("connected");
-    ws.onmessage = handleMessage;
+    ws.onmessage = (event: MessageEvent) => {
+      const parsed = JSON.parse(event.data);
+      if (parsed.type === "SYSTEM_RESOURCES_MONITORING" && parsed.data) {
+        resourcesRef.current = parsed.data;
+      }
+      if (parsed.type === "CALL_COUNT" && parsed.data) {
+        callsCountRef.current = parsed.data.calls_count;
+      }
+    };
     ws.onerror = () => setConnectionState("error");
     ws.onclose = () => {
       if (!isUnmounted) setConnectionState("error");
@@ -50,7 +57,7 @@ export const useDashboardSocket = (): DashboardData => {
       isUnmounted = true;
       ws.close();
     };
-  }, [handleMessage]);
+  }, []);
 
   return { resources, callsCount, connectionState };
 };

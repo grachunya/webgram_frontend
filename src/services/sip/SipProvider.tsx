@@ -22,6 +22,7 @@ export default function SipProvider({ user, children }: SipProviderProps) {
   const mountedRef = useRef(true);
   const initRef = useRef(false);
   const clientRef = useRef<SipClient | null>(null);
+  const configRef = useRef<Config | null>(null);
 
   const [sipStatus, setSipStatus] = useState<SipStatus>("Не подключен");
   const [callStatus, setCallStatus] = useState<CallStatus | null>(null);
@@ -29,26 +30,40 @@ export default function SipProvider({ user, children }: SipProviderProps) {
   const [error, setError] = useState<string | null>(null);
   const [client, setClient] = useState<SipClient | null>(null);
 
-  const config = useMemo((): Config | null => {
+  useEffect(() => {
     const { agent } = user;
-    if (!agent?.agent_number || !agent?.agent_password || !domain) return null;
-    return {
+    if (!agent?.agent_number || !agent?.agent_password || !domain) return;
+
+    const nextConfig: Config = {
       username: agent.agent_number,
       password: agent.agent_password,
-      domain: domain,
+      domain,
       ...SIP_CONFIG,
     };
+
+    const prev = configRef.current;
+    if (
+      prev &&
+      prev.username === nextConfig.username &&
+      prev.password === nextConfig.password &&
+      prev.domain === nextConfig.domain
+    ) {
+      return;
+    }
+
+    configRef.current = nextConfig;
   }, [user, domain]);
 
   useEffect(() => {
     mountedRef.current = true;
 
-    if (!config || initRef.current) return;
+    if (!configRef.current || initRef.current) return;
     initRef.current = true;
 
     const id = setTimeout(() => {
       if (!mountedRef.current) return;
 
+      const config = configRef.current!;
       const callbacks: SipCallbacks = {
         onStatusChange: (s) => setSipStatus(s),
         onCallStatusChange: (s) => setCallStatus(s),
@@ -80,7 +95,7 @@ export default function SipProvider({ user, children }: SipProviderProps) {
       clientRef.current?.destroy().catch(() => {});
       clientRef.current = null;
     };
-  }, [config]);
+  }, []);
 
   const value = useMemo<SipContextValue>(
     () => ({ sipStatus, callStatus, caller, error, client }),

@@ -1,32 +1,32 @@
+import { memo, useCallback, useMemo, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useCurrentUser } from "@hooks/useCurrentUser";
 import { sidebarItems } from "./sidebarItems";
 import styles from "./Sidebar.module.scss";
 
-interface SidebarProps {
-  collapsed: boolean;
-  onToggle: () => void;
-}
+const Sidebar = memo(function Sidebar() {
+  const [collapsed, setCollapsed] = useState(true);
 
-const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
   const { data: user } = useCurrentUser();
   const userRole = user?.role?.role_name;
 
-  const handleMouseEnter = () => {
-    if (collapsed) onToggle();
-  };
+  const handleMouseEnter = useCallback(() => {
+    setCollapsed(false);
+  }, []);
 
-  const handleMouseLeave = () => {
-    if (!collapsed) onToggle();
-  };
+  const handleMouseLeave = useCallback(() => {
+    setCollapsed(true);
+  }, []);
 
-  const handleLinkClick = () => {
-    if (!collapsed) onToggle();
-  };
+  const handleLinkClick = useCallback(() => {
+    setCollapsed(true);
+  }, []);
 
-  const visibleItems = sidebarItems.filter(
-    (item) => !item.requiredRole || item.requiredRole === userRole,
-  );
+  const visibleItems = useMemo(() => {
+    return sidebarItems.filter(
+      (item) => !item.requiredRole || item.requiredRole === userRole,
+    );
+  }, [userRole]);
 
   return (
     <div
@@ -56,6 +56,6 @@ const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
       </aside>
     </div>
   );
-};
+});
 
 export default Sidebar;

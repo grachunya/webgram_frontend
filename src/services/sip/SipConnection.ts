@@ -51,6 +51,7 @@ export class SipConnection {
       contactParams: { transport: "wss" },
       logBuiltinEnabled: false,
       logConfiguration: false,
+      keepAliveInterval: 30,
       reconnectionDelay: 5,
       reconnectionAttempts: 999,
       sessionDescriptionHandlerFactoryOptions: {

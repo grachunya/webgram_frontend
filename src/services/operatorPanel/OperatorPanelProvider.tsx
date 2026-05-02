@@ -73,10 +73,19 @@ export default function OperatorPanelProvider({
     ws.onmessage = (e: MessageEvent<string>) => {
       const parsed: unknown = JSON.parse(e.data);
       if (typeof parsed === "object" && parsed !== null && "type" in parsed) {
-        setState((s) => ({
-          ...s,
-          lastMessage: parsed as OperatorPanelMessage,
-        }));
+        const msg = parsed as OperatorPanelMessage;
+        setState((s) => {
+          const prev = s.lastMessage?.data;
+          const next = msg.data;
+          if (
+            prev &&
+            prev.agent_uuid === next.agent_uuid &&
+            prev.agent_status === next.agent_status
+          ) {
+            return s;
+          }
+          return { ...s, lastMessage: msg };
+        });
       }
     };
 

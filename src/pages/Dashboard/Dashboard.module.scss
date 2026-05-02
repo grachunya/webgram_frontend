@@ -45,7 +45,7 @@
   grid-template-columns: 3fr 1fr;
   grid-template-areas: "resources calls";
   gap: 24px;
-
+  margin-bottom: 24px;
   @include bp.lg {
     grid-template-columns: 1fr;
     grid-template-areas:
@@ -65,6 +65,7 @@
 .panel {
   display: flex;
   flex-direction: column;
+
   gap: 16px;
   padding: 24px;
   background: var(--bg-card);
@@ -149,6 +150,7 @@
   font-size: 15px;
   font-weight: 700;
   color: var(--text-primary);
+  transition: opacity var(--transition-base);
 }
 
 .chartInfo {
@@ -167,5 +169,97 @@
 .callsCount {
   font-size: 22px;
   font-weight: 700;
+  color: var(--text-primary);
+  transition: opacity var(--transition-base);
+}
+
+.dailyHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dateNav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dateBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  color: var(--text-secondary);
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
+
+  &:hover {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-hover);
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+.dateLabel {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  min-width: 120px;
+  text-align: center;
+  user-select: none;
+}
+
+.dailyChartWrapper {
+  width: 100%;
+
+  :global(svg),
+  :global(svg *),
+  :global(.recharts-wrapper),
+  :global(.recharts-wrapper *) {
+    outline: none;
+  }
+}
+
+.dailyEmpty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 220px;
+  font-size: 14px;
+  color: var(--text-disabled);
+}
+
+.chartTooltip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-card);
+}
+
+.tooltipLabel {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.tooltipValue {
+  font-size: 13px;
+  font-weight: 600;
   color: var(--text-primary);
 }

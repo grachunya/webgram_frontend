@@ -1,4 +1,5 @@
 import { ActiveCallsPanel } from "./components/ActiveCallsPanel";
+import { DailyCallsChart } from "./components/DailyCallsChart";
 import { SystemResourcesPanel } from "./components/SystemResourcesPanel";
 import styles from "./Dashboard.module.scss";
 import { useDashboardSocket } from "./hooks/useDashboardSocket";
@@ -23,6 +24,7 @@ const Dashboard = () => {
           <SystemResourcesPanel resources={resources} />
           <ActiveCallsPanel callsCount={callsCount} />
         </div>
+        <DailyCallsChart />
       </div>
     </div>
   );

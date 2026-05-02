@@ -1,3 +1,4 @@
+import { memo, useMemo } from "react";
 import styles from "../Dashboard.module.scss";
 import { createChartData } from "../lib/chartData";
 import { DonutChart } from "./DonutChart";
@@ -10,14 +11,17 @@ interface ResourceChartCardProps {
   noData?: boolean;
 }
 
-export const ResourceChartCard = ({
+export const ResourceChartCard = memo(function ResourceChartCard({
   label,
   used,
   free,
   infoText,
   noData,
-}: ResourceChartCardProps) => {
-  const data = noData ? createChartData(0, 1) : createChartData(used, free);
+}: ResourceChartCardProps) {
+  const data = useMemo(
+    () => (noData ? createChartData(0, 1) : createChartData(used, free)),
+    [noData, used, free],
+  );
 
   return (
     <div className={styles.chartCard}>
@@ -26,4 +30,4 @@ export const ResourceChartCard = ({
       <p className={styles.chartInfo}>{noData ? "—" : infoText}</p>
     </div>
   );
-};
+});

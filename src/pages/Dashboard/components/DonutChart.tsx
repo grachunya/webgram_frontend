@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { memo, type ReactNode } from "react";
 import { Pie, PieChart, ResponsiveContainer, Sector } from "recharts";
 import styles from "../Dashboard.module.scss";
 import type { ChartDataItem } from "../lib/chartData";
@@ -28,33 +28,37 @@ interface DonutChartProps {
   centerLabel?: ReactNode;
 }
 
-export const DonutChart = ({ data, centerLabel }: DonutChartProps) => (
-  <div className={styles.chartWrapper}>
-    <ResponsiveContainer width="100%" height={150}>
-      <PieChart>
-        <Pie
-          data={data}
-          dataKey="value"
-          nameKey="name"
-          innerRadius={44}
-          outerRadius={62}
-          startAngle={90}
-          endAngle={-270}
-          stroke="none"
-          rootTabIndex={-1}
-          shape={renderSector}
-          isAnimationActive={false}
-        />
-      </PieChart>
-    </ResponsiveContainer>
+export const DonutChart = memo(function DonutChart({ data, centerLabel }: DonutChartProps) {
+  return (
+    <div className={styles.chartWrapper}>
+      <ResponsiveContainer width="100%" height={150}>
+        <PieChart>
+          <Pie
+            data={data}
+            dataKey="value"
+            nameKey="name"
+            innerRadius={44}
+            outerRadius={62}
+            startAngle={90}
+            endAngle={-270}
+            stroke="none"
+            rootTabIndex={-1}
+            shape={renderSector}
+            isAnimationActive
+            animationDuration={600}
+            animationEasing="ease-out"
+          />
+        </PieChart>
+      </ResponsiveContainer>
 
-    <div className={styles.chartCenter}>
-      {centerLabel ?? (
-        <span className={styles.chartPercent}>{calcPercent(data)}%</span>
-      )}
+      <div className={styles.chartCenter}>
+        {centerLabel ?? (
+          <span className={styles.chartPercent}>{calcPercent(data)}%</span>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+});
 
 function calcPercent(data: ChartDataItem[]): string {
   const used = data[0]?.value ?? 0;
