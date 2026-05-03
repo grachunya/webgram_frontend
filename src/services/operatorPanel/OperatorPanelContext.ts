@@ -1,7 +1,7 @@
 import { createContext } from "react";
 import type { OperatorPanelMessage, UpdateCallsPayload } from "./OperatorPanelProvider";
 
-interface OperatorPanelState {
+export interface OperatorPanelState {
   status: "connecting" | "open" | "closed";
   error: string | null;
   lastMessage: OperatorPanelMessage | null;

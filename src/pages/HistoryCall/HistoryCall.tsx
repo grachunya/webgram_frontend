@@ -3,7 +3,7 @@ import HistoryCallTable from "./components/HistoryCallTable/HistoryCallTable";
 import styles from "./HistoryCall.module.scss";
 import { useHistoryCall } from "./hooks/useHistoryCall";
 
-const PhoneBookPage = () => {
+const HistoryCallPage = () => {
   const historyData = useHistoryCall();
 
   return (
@@ -26,4 +26,4 @@ const PhoneBookPage = () => {
   );
 };
 
-export default PhoneBookPage;
+export default HistoryCallPage;

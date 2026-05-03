@@ -1,6 +1,6 @@
 import { useAppSelector } from "@/store/hooks";
 import { useEffect, useRef, useState } from "react";
-import { OperatorPanelContext } from "./OperatorPanelContext";
+import { OperatorPanelContext, type OperatorPanelState } from "./OperatorPanelContext";
 
 const WS_BASE = "wss://xn--80abcfi9b0a.xn--p1ai/backend/operator-panel";
 
@@ -26,13 +26,6 @@ export interface UpdateCallsPayload {
 export type OperatorPanelMessage =
   | { type: "AGENT_DATA"; data: AgentDataPayload }
   | { type: "UPDATE_CALLS"; data: UpdateCallsPayload };
-
-interface OperatorPanelState {
-  status: "connecting" | "open" | "closed";
-  error: string | null;
-  lastMessage: OperatorPanelMessage | null;
-  calls: UpdateCallsPayload;
-}
 
 export default function OperatorPanelProvider({
   children,

@@ -1,23 +1,24 @@
-import { useCallback } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import type { AgentStatus } from "@api/agents";
 import {
   getFreeAgents,
   getQueues,
-  setUser,
-  setStatus,
   setQueues,
-} from '@api/agents';
-import { getUsers } from '@api/users';
-import type { AgentStatus } from '@api/agents';
+  setStatus,
+  setUser,
+} from "@api/agents";
+import { getUsers } from "@api/users";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useCallback } from "react";
 
 export const useOperators = () => {
   const qc = useQueryClient();
 
   const invalidate = useCallback(
-    () => Promise.all([
-      qc.invalidateQueries({ queryKey: ['users'] }),
-      qc.invalidateQueries({ queryKey: ['currentUser'] }),
-    ]),
+    () =>
+      Promise.all([
+        qc.invalidateQueries({ queryKey: ["users"] }),
+        qc.invalidateQueries({ queryKey: ["currentUser"] }),
+      ]),
     [qc],
   );
 
@@ -27,47 +28,55 @@ export const useOperators = () => {
     isError: isUsersError,
     error: usersError,
   } = useQuery({
-    queryKey: ['users'],
+    queryKey: ["users"],
     queryFn: getUsers,
     staleTime: 30_000,
     gcTime: 5 * 60_000,
   });
 
-  const {
-    data: freeAgents = [],
-    isPending: isAgentsPending,
-  } = useQuery({
-    queryKey: ['freeAgents'],
+  const { data: freeAgents = [], isPending: isAgentsPending } = useQuery({
+    queryKey: ["freeAgents"],
     queryFn: getFreeAgents,
     staleTime: 30_000,
     gcTime: 5 * 60_000,
   });
 
-  const {
-    data: queues = [],
-    isPending: isQueuesPending,
-  } = useQuery({
-    queryKey: ['queues'],
+  const { data: queues = [], isPending: isQueuesPending } = useQuery({
+    queryKey: ["queues"],
     queryFn: getQueues,
     staleTime: 60_000,
     gcTime: 5 * 60_000,
   });
 
   const assignAgent = useMutation({
-    mutationFn: ({ agentUuid, userUuid }: { agentUuid: string; userUuid: string }) =>
-      setUser(agentUuid, userUuid),
+    mutationFn: ({
+      agentUuid,
+      userUuid,
+    }: {
+      agentUuid: string;
+      userUuid: string;
+    }) => setUser(agentUuid, userUuid),
     onSuccess: invalidate,
   });
 
   const changeStatus = useMutation({
-    mutationFn: ({ agent_uuid, agent_status }: { agent_uuid: string; agent_status: AgentStatus }) =>
-      setStatus({ agent_uuid, agent_status }),
-    onSuccess: invalidate,
+    mutationFn: ({
+      agent_uuid,
+      agent_status,
+    }: {
+      agent_uuid: string;
+      agent_status: AgentStatus;
+    }) => setStatus({ agent_uuid, agent_status }),
   });
 
   const assignQueues = useMutation({
-    mutationFn: ({ agent_uuid, queue_uuids }: { agent_uuid: string; queue_uuids: string[] }) =>
-      setQueues({ agent_uuid, queue_uuids }),
+    mutationFn: ({
+      agent_uuid,
+      queue_uuids,
+    }: {
+      agent_uuid: string;
+      queue_uuids: string[];
+    }) => setQueues({ agent_uuid, queue_uuids }),
     onSuccess: invalidate,
   });
 

@@ -11,7 +11,6 @@ interface ModalProps {
 const Modal = ({ title, isOpen, onClose, children }: ModalProps) => {
   if (!isOpen) return null;
 
-
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>

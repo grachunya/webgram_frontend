@@ -20,16 +20,15 @@ const Home = () => {
           {CARD_SECTIONS.map((section) => {
             const Icon = section.icon;
             return (
-              <a
+              <div
                 key={section.id}
-                href="#"
                 className={styles.sectionCard}
                 onClick={(e) => e.preventDefault()}
               >
                 <Icon className={styles.sectionIcon} size={36} />
                 <h3 className={styles.sectionTitle}>{section.title}</h3>
                 <p className={styles.sectionDesc}>{section.description}</p>
-              </a>
+              </div>
             );
           })}
         </nav>

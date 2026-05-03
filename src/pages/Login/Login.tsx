@@ -60,8 +60,6 @@ const Login = () => {
               {getServerErrorMessage(error) ?? "Произошла ошибка"}
             </span>
           )}
-
-        
         </div>
           <Button type="submit" block disabled={isPending}>
             {isPending ? "Вход..." : "Войти"}

@@ -21,7 +21,7 @@ const RolesTable = ({ roles, onEdit, onDelete }: RolesTableProps) => (
       <tbody>
         {roles.map((r) => (
           <tr key={r.role_uuid}>
-            <td ><RoleBadge roleName={r.role_name}/></td>
+            <td><RoleBadge roleName={r.role_name} /></td>
             <td className={styles.actionsCol}>
               <div className={styles.actions}>
                 <button

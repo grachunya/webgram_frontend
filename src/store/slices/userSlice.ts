@@ -39,9 +39,11 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-
       .addCase(fetchCurrentUser.pending, (state) => {
-        state.isLoading = true;
+        if (!state.isInitialized) {
+          state.isLoading = true;
+        }
+
         state.error = null;
       })
 
@@ -53,6 +55,7 @@ const userSlice = createSlice({
 
       .addCase(fetchCurrentUser.rejected, (state, action) => {
         state.isLoading = false;
+        state.currentUser = null;
         state.error = action.payload as string;
         state.isInitialized = true;
       });

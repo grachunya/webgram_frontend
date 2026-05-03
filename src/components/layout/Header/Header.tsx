@@ -7,7 +7,13 @@ import { useOperatorPanel } from "@services/operatorPanel/useOperatorPanel";
 import { SipContext } from "@services/sip/sipContext";
 import Button from "@ui/Button/Button";
 import StatusSelect from "@ui/StatusSelect/StatusSelect";
-import { ArrowRightLeft, LogOut, Phone, PhoneCall, PhoneOff } from "lucide-react";
+import {
+  ArrowRightLeft,
+  LogOut,
+  Phone,
+  PhoneCall,
+  PhoneOff,
+} from "lucide-react";
 import { useContext, useMemo } from "react";
 import styles from "./Header.module.scss";
 
@@ -122,7 +128,9 @@ const Header = () => {
                       type="tel"
                       placeholder="Номер для перевода"
                       value={transferTarget}
-                      onChange={(e) => handleTransferTargetChange(e.target.value)}
+                      onChange={(e) =>
+                        handleTransferTargetChange(e.target.value)
+                      }
                     />
                     <Button
                       className={styles.btnTransferConfirm}
@@ -132,7 +140,9 @@ const Header = () => {
                       <ArrowRightLeft size={14} />
                     </Button>
                     {transferError && (
-                      <span className={styles.transferError}>{transferError}</span>
+                      <span className={styles.transferError}>
+                        {transferError}
+                      </span>
                     )}
                   </div>
                 )}
