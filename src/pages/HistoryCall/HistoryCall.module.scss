@@ -36,3 +36,54 @@
   color: var(--danger);
   font-size: 0.9rem;
 }
+
+.inputWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.input {
+  border: 1px solid var(--border-default);
+  background-color: white;
+  margin-top: -6px;
+  padding-right: 32px;
+}
+
+.clearButton {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--bg-primary);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: color 0.2s;
+  border-radius: 50%;
+
+  &:hover {
+    background: var(--bg-secondary);
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.searchButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  padding: 10px 24px;
+}
+
+.searchWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

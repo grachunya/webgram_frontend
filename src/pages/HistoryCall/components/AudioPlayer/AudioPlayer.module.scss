@@ -1,0 +1,66 @@
+.container {
+  width: 100%;
+}
+
+.nativePlayer {
+  width: 100%;
+  min-width: 270px;
+  display: block;
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  height: 40px;
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.8rem;
+  font-weight: 500;
+
+  &:hover {
+    background-color: var(--border-default);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.placeholderIcon {
+  flex-shrink: 0;
+  color: var(--text-secondary);
+}
+
+.placeholderText {
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  height: 40px;
+  color: var(--text-secondary);
+  background-color: var(--bg-primary);
+  font-size: 0.8rem;
+  padding: 0 12px;
+  border-radius: var(--radius-sm);
+}
+
+
+
+
+.error {
+  font-size: 0.8rem;
+  color: var(--text-disabled);
+  text-align: center;
+  padding: 8px;
+  font-style: italic;
+}

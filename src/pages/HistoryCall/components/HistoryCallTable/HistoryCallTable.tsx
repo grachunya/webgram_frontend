@@ -1,10 +1,12 @@
 import type { HistoryCall } from "@/api/historyCall";
 import { formatDate } from "@/lib/formatDate";
 import { ArrowDownLeft, ArrowUpRight, Clock } from "lucide-react";
+import { AudioPlayer } from "../AudioPlayer/AudioPlayer";
 import styles from "./HistoryCallTable.module.scss";
 
 interface HistoryCallTableProps {
   historyCall: HistoryCall[];
+  canViewRecordings: boolean;
 }
 
 const DirectionBadge = ({ direction }: { direction: string }) => {
@@ -24,7 +26,10 @@ const DirectionBadge = ({ direction }: { direction: string }) => {
   );
 };
 
-const HistoryCallTable = ({ historyCall }: HistoryCallTableProps) => {
+const HistoryCallTable = ({
+  historyCall,
+  canViewRecordings,
+}: HistoryCallTableProps) => {
   return (
     <div className={styles.tableWrap}>
       <table className={styles.table}>
@@ -34,6 +39,7 @@ const HistoryCallTable = ({ historyCall }: HistoryCallTableProps) => {
             <th>Номер получателя</th>
             <th>Тип вызова</th>
             <th>Длительность</th>
+            {canViewRecordings && <th>Запись разговора</th>}
             <th>Дата</th>
           </tr>
         </thead>
@@ -51,12 +57,21 @@ const HistoryCallTable = ({ historyCall }: HistoryCallTableProps) => {
                   {u.duration}
                 </span>
               </td>
+              {canViewRecordings && (
+                <td className={styles.recordingCell}>
+                  {u.call_uuid ? (
+                    <AudioPlayer callUuid={u.call_uuid} />
+                  ) : (
+                    <span className={styles.noRecording}>Нет записи</span>
+                  )}
+                </td>
+              )}
               <td className={styles.dateCell}>{formatDate(u.start_stamp)}</td>
             </tr>
           ))}
           {historyCall.length === 0 && (
             <tr>
-              <td colSpan={4} className={styles.empty}>
+              <td colSpan={canViewRecordings ? 6 : 5} className={styles.empty}>
                 Нет вызовов
               </td>
             </tr>
