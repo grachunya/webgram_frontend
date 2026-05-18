@@ -1,3 +1,4 @@
+import { useOperatorPanel } from "@/services/operatorPanel/useOperatorPanel";
 import { upgradeSocket } from "@api/agents";
 import { useCurrentUser } from "@hooks/useCurrentUser";
 import { getServerErrorMessage } from "@lib/getErrorMessage";
@@ -10,13 +11,19 @@ const Operators = () => {
   const data = useOperators();
   const { data: user } = useCurrentUser();
   const calledRef = useRef(false);
+  const { status } = useOperatorPanel();
 
   useEffect(() => {
     const uuid = user?.agent?.agent_uuid;
-    if (!uuid || calledRef.current) return;
+
+    if (!uuid) return;
+    if (status !== "open") return;
+    if (calledRef.current) return;
+
     calledRef.current = true;
+
     upgradeSocket(uuid).catch(() => {});
-  }, [user?.agent?.agent_uuid]);
+  }, [user?.agent?.agent_uuid, status]);
 
   if (data.isPending) return <p className={styles.loading}>Загрузка…</p>;
   if (data.isError)
